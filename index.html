@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MellowEmpire | Professional Event Production Services</title>
+    <meta name="description" content="Full-service technical solutions including sound, lighting, rigging, video, and staging for live and virtual events.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Corporate Color Palette */
+            --navy-blue: #0A192F;
+            --navy-dark: #020c1b;
+            --navy-light: #112240;
+            --white: #FFFFFF;
+            --black: #000000;
+            --gray-dark: #333333;
+            --gray-medium: #666666;
+            --gray-light: #F5F5F5;
+            --gray-border: #E0E0E0;
+            --accent: #1E3A8A; /* Subtle accent for links */
+            
+            /* Typography */
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Source Sans Pro', sans-serif;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 3rem;
+            --space-xl: 4rem;
+            --space-xxl: 6rem;
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+            
+            /* Transitions */
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            line-height: 1.6;
+            color: var(--gray-dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-sm);
+            color: var(--navy-blue);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+        }
+        
+        h3 {
+            font-size: 1.75rem;
+        }
+        
+        p {
+            margin-bottom: var(--space-sm);
+            font-size: 1.125rem;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--navy-blue);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--navy-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--navy-blue);
+            border: 2px solid var(--navy-blue);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--navy-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-small {
+            padding: 0.625rem 1.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .btn-large {
+            padding: 1rem 2.5rem;
+            font-size: 1.125rem;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            height: 80px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--black);
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-text span {
+            color: var(--navy-blue);
+        }
+        
+        /* Navigation */
+        .nav-desktop {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: var(--space-md);
+        }
+        
+        .nav-link {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--navy-blue);
+            font-size: 0.95rem;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .dropdown-toggle i {
+            font-size: 0.75rem;
+            transition: var(--transition);
+        }
+        
+        .dropdown:hover .dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--white);
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            min-width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-section h4 {
+            font-size: 1rem;
+            color: var(--navy-blue);
+            margin-bottom: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .dropdown-section ul {
+            list-style: none;
+            margin-bottom: var(--space-md);
+        }
+        
+        .dropdown-section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .dropdown-section a {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+        }
+        
+        .dropdown-section a:hover {
+            color: var(--navy-blue);
+        }
+        
+        /* Header Actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .search-toggle {
+            background: none;
+            border: none;
+            color: var(--navy-blue);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .search-toggle:hover {
+            background-color: var(--gray-light);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--navy-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: var(--navy-blue);
+            color: var(--white);
+            padding-top: 80px;
+            overflow: hidden;
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: var(--space-xxl) 0;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            color: var(--white);
+            margin-bottom: var(--space-md);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: var(--space-lg);
+            font-weight: 400;
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: var(--space-xl);
+            max-width: 700px;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+        
+        .hero .btn-primary {
+            background-color: var(--white);
+            color: var(--navy-blue);
+        }
+        
+        .hero .btn-primary:hover {
+            background-color: var(--gray-light);
+            color: var(--navy-dark);
+        }
+        
+        .hero .btn-secondary {
+            color: var(--white);
+            border-color: var(--white);
+        }
+        
+        .hero .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--navy-blue);
+        }
+        
+        .hero-scroll {
+            position: absolute;
+            bottom: var(--space-lg);
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--white);
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            z-index: 2;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: var(--space-md) 0;
+            background-color: var(--gray-light);
+            border-bottom: 1px solid var(--gray-border);
+        }
+        
+        .breadcrumb-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .breadcrumb-item {
+            color: var(--gray-medium);
+        }
+        
+        .breadcrumb-item.current {
+            color: var(--navy-blue);
+            font-weight: 600;
+        }
+        
+        .breadcrumb-separator {
+            color: var(--gray-medium);
+        }
+        
+        /* Content Sections */
+        .section {
+            padding: var(--space-xl) 0;
+        }
+        
+        .section-header {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .section-title {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--gray-medium);
+            max-width: 800px;
+        }
+        
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+            align-items: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .two-column.reverse {
+            direction: rtl;
+        }
+        
+        .two-column.reverse > * {
+            direction: ltr;
+        }
+        
+        .two-column img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background-color: var(--gray-light);
+            transition: var(--transition);
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .portfolio-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .portfolio-content {
+            padding: var(--space-md);
+        }
+        
+        .portfolio-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .portfolio-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .portfolio-link i {
+            transition: var(--transition);
+        }
+        
+        .portfolio-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Testimonial */
+        .testimonial-section {
+            background-color: var(--navy-light);
+            color: var(--white);
+            padding: var(--space-xxl) 0;
+        }
+        
+        .testimonial-background {
+            position: relative;
+        }
+        
+        .testimonial-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.1;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .testimonial-text {
+            font-size: 1.75rem;
+            font-style: italic;
+            margin-bottom: var(--space-lg);
+            line-height: 1.4;
+        }
+        
+        .testimonial-author {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+        
+        /* Equipment Section */
+        .equipment-section {
+            background-color: var(--gray-light);
+        }
+        
+        .equipment-content {
+            background-color: var(--white);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .equipment-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+        }
+        
+        @media (min-width: 768px) {
+            .equipment-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--navy-blue);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--gray-medium);
+            font-size: 0.875rem;
+        }
+        
+        .equipment-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-sm);
+            margin: var(--space-lg) 0;
+        }
+        
+        @media (min-width: 768px) {
+            .equipment-features {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .feature i {
+            color: var(--navy-blue);
+        }
+        
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-md);
+        }
+        
+        .service-card {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .service-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .service-content {
+            padding: var(--space-md);
+        }
+        
+        .service-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* CTA Banner */
+        .cta-banner {
+            background-color: var(--navy-blue);
+            color: var(--white);
+            padding: var(--space-xl) 0;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            color: var(--white);
+            margin-bottom: var(--space-md);
+        }
+        
+        .cta-description {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: var(--space-lg);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--navy-dark);
+            color: var(--white);
+            padding: var(--space-xxl) 0 var(--space-xl);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+        
+        @media (min-width: 992px) {
+            .footer-content {
+                grid-template-columns: 2fr 3fr;
+            }
+        }
+        
+        .footer-brand {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: var(--space-md);
+            color: var(--white);
+        }
+        
+        .footer-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: var(--space-md);
+        }
+        
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-xl);
+        }
+        
+        .footer-column h3 {
+            color: var(--white);
+            font-size: 1.125rem;
+            margin-bottom: var(--space-md);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+        
+        .footer-column a:hover {
+            color: var(--white);
+        }
+        
+        .contact-info {
+            margin-top: var(--space-sm);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-sm);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .contact-icon {
+            margin-top: 0.125rem;
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            padding-top: var(--space-xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+        }
+        
+        .footer-legal {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        .footer-legal a {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+        }
+        
+        .footer-legal a:hover {
+            color: var(--white);
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100%;
+            background-color: var(--white);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            padding: var(--space-xl);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .mobile-nav.active {
+            right: 0;
+        }
+        
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--gray-border);
+        }
+        
+        .mobile-close {
+            background: none;
+            border: none;
+            color: var(--navy-blue);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            list-style: none;
+            flex: 1;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: var(--space-md);
+        }
+        
+        .mobile-menu a {
+            color: var(--navy-blue);
+            font-size: 1.125rem;
+            font-weight: 600;
+            display: block;
+            padding: 0.5rem 0;
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--accent);
+        }
+        
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .nav-desktop {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-actions .btn {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .hero .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 var(--space-sm);
+            }
+            
+            .section {
+                padding: var(--space-lg) 0;
+            }
+            
+            .hero-content {
+                padding: var(--space-xl) 0;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <!-- Logo -->
+            <a href="/" class="logo">
+                <img src="images/logo/mellowempire-logo-black.svg" alt="MellowEmpire Logo" class="logo-img">
+                <div class="logo-text">Mellow<span>Empire</span></div>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="nav-desktop">
+                <ul class="nav-menu">
+                    <li class="dropdown">
+                        <a href="#services" class="nav-link dropdown-toggle">
+                            What We Do <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-section">
+                                <h4>Services</h4>
+                                <ul>
+                                    <li><a href="#audio">Audio Systems</a></li>
+                                    <li><a href="#lighting">Lighting</a></li>
+                                    <li><a href="#video">Video & LED</a></li>
+                                    <li><a href="#rigging">Rigging</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>Rental</h4>
+                                <ul>
+                                    <li><a href="#equipment">Equipment Rental</a></li>
+                                    <li><a href="#staging">Set & Staging</a></li>
+                                    <li><a href="#production">Full Production</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#portfolio" class="nav-link">Our Work</a></li>
+                    <li><a href="#about" class="nav-link">Why MellowEmpire</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <div class="header-actions">
+                    <button class="search-toggle" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="#contact" class="btn btn-primary btn-small">Get in Touch</a>
+                </div>
+            </nav>
+            
+            <!-- Mobile Toggle -->
+            <button class="mobile-toggle" aria-label="Toggle mobile menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">
+            <div class="logo">
+                <img src="images/logo/mellowempire-logo-black.svg" alt="MellowEmpire Logo" class="logo-img">
+                <div class="logo-text">Mellow<span>Empire</span></div>
+            </div>
+            <button class="mobile-close" aria-label="Close mobile menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="mobile-menu">
+            <li><a href="#services">What We Do</a></li>
+            <li><a href="#audio">Audio Systems</a></li>
+            <li><a href="#lighting">Lighting</a></li>
+            <li><a href="#video">Video & LED</a></li>
+            <li><a href="#rigging">Rigging</a></li>
+            <li><a href="#portfolio">Our Work</a></li>
+            <li><a href="#about">Why MellowEmpire</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="mobile-overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-background">
+            <img src="images/hero/hero-event-production.jpg" alt="Event production with professional audio and lighting equipment" class="hero-bg-image">
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Technical Event Production</h1>
+                <h2 class="hero-subtitle">Technical services for events</h2>
+                <p class="hero-description">
+                    Full service technical solutions including sound, lighting, rigging, video and staging for professional events.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary btn-large">Get in Touch</a>
+                    <a href="#services" class="btn btn-secondary btn-large">Discover more</a>
+                </div>
+            </div>
+        </div>
+        <a href="#services" class="hero-scroll" aria-label="Scroll to services">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container breadcrumb-container">
+            <a href="/" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">»</span>
+            <a href="#services" class="breadcrumb-item">Rental</a>
+            <span class="breadcrumb-separator">»</span>
+            <span class="breadcrumb-item current">Live Event Production</span>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Your Event Technical Partner -->
+        <section class="section" id="services">
+            <div class="container">
+                <div class="two-column">
+                    <div>
+                        <h2 class="section-title">Your event technical partner</h2>
+                        <div class="section-description">
+                            <p>We make planning your event easier by bringing sound, lighting, video, and staging.</p>
+                            <p>Spend less time on co-ordination, and ensure everything works well together with a single point of contact who will manage all technical aspects of your production.</p>
+                            <p>Save on transport, accommodation, and catering costs by sharing key crew members and equipment between departments.</p>
+                            <p>Get a better result with everything designed by a co-ordinated team who ensure you get the most from your investment.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="images/services/technical-production.jpg" alt="Professional technician operating audio equipment">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Grid -->
+        <section class="section bg-gray-light" id="portfolio">
+            <div class="container">
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/sports.jpg" alt="Sports event production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Sports & Esports</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/trade.jpg" alt="Trade show production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Trade</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/corporate.jpg" alt="Corporate event production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Corporate</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/festivals.jpg" alt="Festival production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Festivals</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/led.jpg" alt="Large format LED production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Large Format LED</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/comedy.jpg" alt="Comedy event production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Comedy</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/music.jpg" alt="Music event production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Music</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/tv-film.jpg" alt="TV & Film production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">TV & Film</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/immersive.jpg" alt="Immersive experience production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Immersive</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/venues.jpg" alt="Live venue production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Live Venues</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/architectural.jpg" alt="Architectural lighting production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Architectural</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-item">
+                        <img src="images/portfolio/theatre.jpg" alt="Theatre production" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <h3 class="portfolio-title">Theatre</h3>
+                            <a href="#contact" class="portfolio-link">See all projects <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonial Section -->
+        <section class="testimonial-section">
+            <div class="testimonial-background">
+                <img src="images/testimonials/testimonial-bg.jpg" alt="Stage lighting background" class="testimonial-bg-image">
+            </div>
+            <div class="container">
+                <div class="testimonial-content">
+                    <div class="testimonial-text">
+                        "MellowEmpire provided excellent service, quality gear, expert technicians and a friendly, interpersonal touch to the experience of hiring audio, lighting and video systems."
+                    </div>
+                    <div class="testimonial-author">
+                        Professional Event Production Services
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipment Rental -->
+        <section class="section equipment-section" id="equipment">
+            <div class="container">
+                <div class="two-column">
+                    <div class="equipment-content">
+                        <h2 class="section-title">Equipment Rental</h2>
+                        <h3 class="section-subtitle">A single source supplier for your production.</h3>
+                        <div class="section-description">
+                            <p>Regardless of whether it's a dry hire or a supported hire, you get access to the same support and experience as you plan your project.</p>
+                            <p>Get access to professional equipment and a team with extensive experience working in popular venues.</p>
+                        </div>
+                        
+                        <div class="equipment-stats">
+                            <div class="stat">
+                                <div class="stat-number">500+</div>
+                                <div class="stat-label">Equipment Items</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Support Available</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">Safety Record</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">40+</div>
+                                <div class="stat-label">Years Experience</div>
+                            </div>
+                        </div>
+                        
+                        <div class="equipment-features">
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>Professional equipment inventory</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>In-house transport & logistics team</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>Pre-production / prep space</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>Access to CAD and design suite</span>
+                            </div>
+                        </div>
+                        
+                        <a href="#contact" class="btn btn-primary">Get our rental inventory</a>
+                    </div>
+                    <div>
+                        <img src="images/equipment/warehouse.jpg" alt="Professional equipment warehouse">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Grid -->
+        <section class="section bg-gray-light">
+            <div class="container">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <img src="images/services/audio.jpg" alt="Sound equipment rental" class="service-image">
+                        <div class="service-content">
+                            <h3 class="service-title">Audio Rental</h3>
+                            <a href="#contact" class="portfolio-link">Find out more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <img src="images/services/lighting.jpg" alt="Lighting rental" class="service-image">
+                        <div class="service-content">
+                            <h3 class="service-title">Lighting Rental</h3>
+                            <a href="#contact" class="portfolio-link">Find out more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <img src="images/services/video.jpg" alt="Video equipment rental" class="service-image">
+                        <div class="service-content">
+                            <h3 class="service-title">Video Rental</h3>
+                            <a href="#contact" class="portfolio-link">Find out more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <img src="images/services/staging.jpg" alt="Set & staging rental" class="service-image">
+                        <div class="service-content">
+                            <h3 class="service-title">Set & Staging Rental</h3>
+                            <a href="#contact" class="portfolio-link">Find out more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <img src="images/services/rigging.jpg" alt="Rigging equipment rental" class="service-image">
+                        <div class="service-content">
+                            <h3 class="service-title">Rigging Rental</h3>
+                            <a href="#contact" class="portfolio-link">Find out more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonial 2 -->
+        <section class="testimonial-section">
+            <div class="testimonial-background">
+                <img src="images/testimonials/testimonial-bg-2.jpg" alt="Event production background" class="testimonial-bg-image">
+            </div>
+            <div class="container">
+                <div class="testimonial-content">
+                    <div class="testimonial-text">
+                        "It really was a joy to work with you all!"
+                    </div>
+                    <div class="testimonial-author">
+                        Professional Event Production Team
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Production Space -->
+        <section class="section" id="about">
+            <div class="container">
+                <div class="two-column reverse">
+                    <div>
+                        <h2 class="section-title">The Production Space</h2>
+                        <h3 class="section-subtitle">A flexible studio for pre-production and filming.</h3>
+                        <div class="section-description">
+                            <p>The Production Space is big enough to handle most on stage elements whether it's a festival floor package, an Academy system, or elements of arena touring productions.</p>
+                        </div>
+                        <a href="#contact" class="btn btn-primary">Find Out More</a>
+                    </div>
+                    <div>
+                        <img src="images/facilities/production-space.jpg" alt="Production studio space">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Studios -->
+        <section class="section bg-gray-light">
+            <div class="container">
+                <div class="two-column">
+                    <div>
+                        <h2 class="section-title">The Studios</h2>
+                        <h3 class="section-subtitle">Purpose built pre-visualisation suites</h3>
+                        <div class="section-description">
+                            <p>We have crafted the perfect environment for show programming with both the designer and artist in mind.</p>
+                        </div>
+                        <a href="#contact" class="btn btn-primary">Find Out More</a>
+                    </div>
+                    <div>
+                        <img src="images/facilities/studios.jpg" alt="Pre-visualisation studio">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="section cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 class="cta-title">Ready to talk about your project?</h2>
+                    <p class="cta-description">
+                        Whether you need a quote, or just some help and advice, we'd love to speak to you.
+                    </p>
+                    <a href="#contact" class="btn btn-primary btn-large">Get in Touch</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications -->
+        <section class="section bg-gray-light">
+            <div class="container">
+                <div style="text-align: center; padding: var(--space-lg) 0;">
+                    <h3 style="margin-bottom: var(--space-xl);">Professional Certifications & Accreditations</h3>
+                    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: var(--space-xl); opacity: 0.7;">
+                        <div style="font-weight: 600;">ISO 9001 Certified</div>
+                        <div style="font-weight: 600;">Health & Safety Approved</div>
+                        <div style="font-weight: 600;">Professional Memberships</div>
+                        <div style="font-weight: 600;">Insurance Certified</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="images/logo/mellowempire-logo-white.svg" alt="MellowEmpire Logo" class="logo-img">
+                        <div class="logo-text">Mellow<span>Empire</span></div>
+                    </div>
+                    <p class="footer-description">
+                        When you choose MellowEmpire you get more than just equipment. We're your event technology partner for rental, purchase, or installation.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Department Contacts</h3>
+                        <ul>
+                            <li>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope contact-icon"></i>
+                                    <div>
+                                        <strong>Rental</strong><br>
+                                        rental@mellowempire.com
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope contact-icon"></i>
+                                    <div>
+                                        <strong>Sales</strong><br>
+                                        sales@mellowempire.com
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope contact-icon"></i>
+                                    <div>
+                                        <strong>Integration</strong><br>
+                                        integration@mellowempire.com
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Office</h3>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone contact-icon"></i>
+                                <div>
+                                    <strong>Phone</strong><br>
+                                    +1 234 567 8900
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope contact-icon"></i>
+                                <div>
+                                    <strong>Email</strong><br>
+                                    enquiries@mellowempire.com
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt contact-icon"></i>
+                                <div>
+                                    <strong>Address</strong><br>
+                                    Professional Event Production<br>
+                                    MellowEmpire Headquarters
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#services">What We Do</a></li>
+                            <li><a href="#portfolio">Our Work</a></li>
+                            <li><a href="#about">Why MellowEmpire</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#contact">Get a Quote</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © Copyright MellowEmpire. All rights reserved.
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Privacy</a>
+                    <a href="#">Legal</a>
+                    <a href="#">Online Store</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const mobileClose = document.querySelector('.mobile-close');
+        const mobileOverlay = document.querySelector('.mobile-overlay');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        mobileClose.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        mobileOverlay.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                // Skip if it's just "#"
+                if (href === '#') return;
+                
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    
+                    // Calculate header height for offset
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        const header = document.querySelector('.header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Search functionality
+        const searchToggle = document.querySelector('.search-toggle');
+        if (searchToggle) {
+            searchToggle.addEventListener('click', () => {
+                alert('Search functionality would be implemented here.');
+            });
+        }
+
+        // Initialize animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.portfolio-item, .service-card, .two-column').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message. We will contact you soon.');
+                this.reset();
+            });
+        });
+    </script>
+</body>
+</html>
