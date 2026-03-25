@@ -1,0 +1,6 @@
+.DS_Store
+Thumbs.db
+
+# Local AI codebase pack (Repomix; never commit)
+repomix-output.xml
+repomix-output.*.xml
