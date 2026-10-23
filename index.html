@@ -14,17 +14,18 @@
 <link rel="icon" href="/images/logo/mellow-sounds/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/images/logo/mellow-sounds/mellow-sounds_favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/images/logo/mellow-sounds/mellow-sounds_apple_touch_icon_180.png">
-<link rel="preload" as="image" href="/assets/photos/p01.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="/assets/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body data-world="navy">
 <div class="bigword" aria-hidden="true">
   <span data-word="hero">Mellow</span><span data-word="crimson">Concerts</span><span data-word="gold">Weddings</span>
   <span data-word="ivory">Church</span><span data-word="navy2">Corporate</span><span data-word="divisions">Empire</span><span data-word="cta">Book</span>
 </div>
+<canvas id="gl" aria-hidden="true"></canvas>
 
 <header>
   <a href="#top" aria-label="Mellow Empire home"><img src="/images/logo/mellow-sounds/nav_crimson_disk_white_64h.png" alt="Mellow Sound 256" height="40"></a>
@@ -35,8 +36,7 @@
 </header>
 
 <main id="top">
-  <section class="hero" data-world="navy" data-word="hero">
-    <div class="hero-bg"><img src="/assets/photos/p01.jpg" alt="A packed concert crowd under stage lights and lasers"></div>
+  <section class="hero" data-scene="0" data-world="navy" data-word="hero">
     <div class="copy">
       <p class="eyebrow">Mellow Empire · Kampala, Uganda</p>
       <h1>Sound, stage and story for every occasion.</h1>
@@ -45,7 +45,7 @@
     </div>
   </section>
 
-  <section id="solutions" class="wide" data-world="navy" data-word="divisions">
+  <section id="solutions" class="wide" data-scene="1" data-world="navy" data-word="divisions">
     <div class="copy" style="max-width:640px">
       <p class="eyebrow">What we do</p>
       <h2>Five disciplines. One partner.</h2>
@@ -61,67 +61,43 @@
   </section>
 
   <div id="worlds"></div>
-  <section data-world="crimson" data-word="crimson">
-    <div class="split">
-      <div class="copy">
-        <p class="eyebrow">Concerts &amp; festivals</p>
-        <h2>Make the whole crowd feel it.</h2>
-        <p>Sound, lighting, staging and LED screens, run by one crew, with a DJ who reads the room. From club nights to open-air festivals.</p>
-        <a class="btn" href="#contact">Enquire about a concert</a>
-      </div>
-      <div class="collage">
-        <figure class="frame main reveal"><img data-speed="-0.07" src="/assets/photos/p03.jpg" alt="A festival crowd facing a stage lit with warm light" loading="lazy"></figure>
-        <figure class="frame sub reveal"><img data-speed="0.06" src="/assets/photos/p09.jpg" alt="Hands raised in a heart shape in front of stage lights" loading="lazy"></figure>
-      </div>
+  <section class="tall right" data-scene="2" data-world="crimson" data-word="crimson">
+    <div class="copy">
+      <p class="eyebrow">Concerts &amp; festivals</p>
+      <h2>Make the whole crowd feel it.</h2>
+      <p>Sound, lighting, staging and LED screens, run by one crew, with a DJ who reads the room. From club nights to open-air festivals.</p>
+      <a class="btn" href="#contact">Enquire about a concert</a>
     </div>
   </section>
 
-  <section data-world="gold" data-word="gold">
-    <div class="split rev">
-      <div class="copy">
-        <p class="eyebrow">Weddings &amp; private events</p>
-        <h2>Every vow heard. Every dance floor full.</h2>
-        <p>Clear sound for the ceremony, the right mood for the reception, and a team that stays out of the photos and in the details.</p>
-        <a class="btn" href="#contact">Enquire about a wedding</a>
-      </div>
-      <div class="collage">
-        <figure class="frame main reveal"><img data-speed="-0.07" src="/assets/photos/p11.jpg" alt="An outdoor wedding aisle lined with flowers and chairs" loading="lazy"></figure>
-        <figure class="frame sub reveal"><img data-speed="0.06" src="/assets/photos/p12.jpg" alt="A long reception table set with glasses and flowers" loading="lazy"></figure>
-      </div>
+  <section class="tall" data-scene="3" data-world="gold" data-word="gold">
+    <div class="copy">
+      <p class="eyebrow">Weddings &amp; private events</p>
+      <h2>Every vow heard. Every dance floor full.</h2>
+      <p>Clear sound for the ceremony, the right mood for the reception, and a team that stays out of the photos and in the details.</p>
+      <a class="btn" href="#contact">Enquire about a wedding</a>
     </div>
   </section>
 
-  <section data-world="ivory" data-word="ivory">
-    <div class="split">
-      <div class="copy">
-        <p class="eyebrow">Church &amp; ministry AV</p>
-        <h2>The message carries to the back row.</h2>
-        <p>AV systems, live streaming, technical training and ongoing ministry support, built around how your church actually meets.</p>
-        <a class="btn" href="#contact">Talk to us about your church</a>
-      </div>
-      <div class="collage">
-        <figure class="frame main reveal"><img data-speed="-0.07" src="/assets/photos/p06.jpg" alt="Hands holding an open Bible" loading="lazy"></figure>
-        <figure class="frame sub reveal"><img data-speed="0.06" src="/assets/photos/p15.jpg" alt="A microphone on a stand in a venue" loading="lazy"></figure>
-      </div>
+  <section class="tall right" data-scene="4" data-world="ivory" data-word="ivory">
+    <div class="copy">
+      <p class="eyebrow">Church &amp; ministry AV</p>
+      <h2>The message carries to the back row.</h2>
+      <p>AV systems, live streaming, technical training and ongoing ministry support, built around how your church actually meets.</p>
+      <a class="btn" href="#contact">Talk to us about your church</a>
     </div>
   </section>
 
-  <section data-world="navy" data-word="navy2">
-    <div class="split rev">
-      <div class="copy">
-        <p class="eyebrow">Conferences, launches &amp; retreats</p>
-        <h2>Corporate events that run like clockwork.</h2>
-        <p>Conference AV, LED screens, product launches and team retreats and training, with one point of contact from brief to teardown.</p>
-        <a class="btn" href="#contact">Plan a corporate event</a>
-      </div>
-      <div class="collage">
-        <figure class="frame main reveal"><img data-speed="-0.07" src="/assets/photos/p10.jpg" alt="A speaker on a stage surrounded by an audience and wide screens" loading="lazy"></figure>
-        <figure class="frame sub reveal"><img data-speed="0.06" src="/assets/photos/p14.jpg" alt="An audience watching a presentation on a large screen" loading="lazy"></figure>
-      </div>
+  <section class="tall" data-scene="5" data-world="navy" data-word="navy2">
+    <div class="copy">
+      <p class="eyebrow">Conferences, launches &amp; retreats</p>
+      <h2>Corporate events that run like clockwork.</h2>
+      <p>Conference AV, LED screens, product launches and team retreats and training, with one point of contact from brief to teardown.</p>
+      <a class="btn" href="#contact">Plan a corporate event</a>
     </div>
   </section>
 
-  <section id="divisions" class="wide" data-world="navy" data-word="divisions">
+  <section id="divisions" class="wide" data-scene="6" data-world="navy" data-word="divisions">
     <div class="copy" style="max-width:640px">
       <p class="eyebrow">The empire</p>
       <h2>One empire. Growing divisions.</h2>
@@ -135,7 +111,7 @@
     <p class="quote">“They didn't just deliver equipment, they delivered an experience.”<small>Corporate client, Kampala</small></p>
   </section>
 
-  <section id="contact" class="wide" data-world="crimson" data-word="cta">
+  <section id="contact" class="wide" data-scene="7" data-world="crimson" data-word="cta">
     <div class="copy" style="max-width:640px">
       <p class="eyebrow">Ready when you are</p>
       <h2>Tell us the date. We'll bring the sound.</h2>
@@ -155,10 +131,11 @@
 </main>
 
 <footer>
+  <img src="/images/logo/mellow-sounds/nav_crimson_disk_white_64h.png" alt="Mellow Sound 256" height="32" style="height:32px;width:auto">
   <span>© 2025 Mellow Empire · Kampala, Uganda</span>
   <span>Darius Buwembo, Chief Executive Officer</span>
 </footer>
 
-<script src="/assets/site.js" defer></script>
+<script type="module" src="/assets/site.js"></script>
 </body>
 </html>
