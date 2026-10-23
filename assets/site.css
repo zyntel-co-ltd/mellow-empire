@@ -67,3 +67,18 @@ main>section.hero{z-index:0}
 .hero .copy{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;max-width:min(760px,70vw)}
 .hero h1{font-size:clamp(3rem,8.4vw,7.4rem)}
 .hero .copy p{max-width:min(440px,80vw)}
+/* disco lights across the whole site: soft colour pools drifting, and two slow sweeping beams */
+.disco{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.disco i{position:absolute;width:46vmax;height:46vmax;border-radius:50%;filter:blur(70px);opacity:.16;mix-blend-mode:multiply;animation:pool 18s ease-in-out infinite alternate}
+.disco i:nth-child(1){background:#EB1B57;left:-10vmax;top:-12vmax}
+.disco i:nth-child(2){background:#22D3EE;right:-12vmax;top:10vh;animation-duration:22s;animation-delay:-6s}
+.disco i:nth-child(3){background:#7C3AED;left:20vw;bottom:-18vmax;animation-duration:26s;animation-delay:-11s}
+.disco i:nth-child(4){background:#E2B04A;right:10vw;bottom:-10vmax;animation-duration:20s;animation-delay:-3s}
+.disco b{position:absolute;top:-20vh;width:28vmax;height:140vh;transform-origin:50% 0;opacity:.09;filter:blur(6px);
+  background:linear-gradient(to bottom,var(--beam,#EB1B57),transparent 75%);clip-path:polygon(46% 0,54% 0,100% 100%,0 100%);animation:sweep 9s ease-in-out infinite alternate}
+.disco b:nth-of-type(1){left:8vw;--beam:#EB1B57}
+.disco b:nth-of-type(2){right:8vw;--beam:#7C3AED;animation-duration:11s;animation-delay:-4s}
+@keyframes pool{0%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vh) scale(1.15)}100%{transform:translate(-6vw,10vh) scale(.92)}}
+@keyframes sweep{0%{transform:rotate(-22deg)}100%{transform:rotate(22deg)}}
+@media (prefers-reduced-motion:reduce){.disco i,.disco b{animation:none}}
+footer{background:var(--bg)}

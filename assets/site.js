@@ -121,14 +121,44 @@ if (renderer) {
   place('yamaha-mg06', { width: 0.3, yaw: -0.3 }, [3.3, H + 0.9, 1.2], 6, 0.65, [1.5, 2, 1.5], [0, 1, 0]);
   // DJ booth: table, CDJ-3000s + DJM-A9, Sony MDR-7506 headphones on top
   const BOOTH = [-1.0, H, -0.5];
-  add(block(2.4, 1.0, 0.9, 0x111217), BOOTH, 7, 0, [0, -2, 0]);
+  // the booth: black body, an animated LED front panel with the logo, and colour-cycling light strips
+  const led = document.createElement('canvas'); led.width = 1024; led.height = 384;
+  const lg = led.getContext('2d');
+  const ledTex = new THREE.CanvasTexture(led); ledTex.colorSpace = THREE.SRGBColorSpace;
+  const logoImg = new Image(); logoImg.src = '/images/logo/mellow-sounds/nav_white_disk_white_128h.png';
+  const COLORS = ['#EB1B57', '#7C3AED', '#22D3EE', '#E2B04A'];
+  function drawLed(t) {
+    const w = led.width, h = led.height;
+    lg.fillStyle = '#05060a'; lg.fillRect(0, 0, w, h);
+    for (let i = 0; i < 48; i++) {               // equaliser bars sweeping through the brand colours
+      const x = i * (w / 48);
+      const v = 0.25 + 0.75 * Math.abs(Math.sin(t * 2.2 + i * 0.37) * Math.cos(t * 0.9 + i * 0.11));
+      lg.fillStyle = COLORS[(i + Math.floor(t * 2)) % COLORS.length];
+      lg.globalAlpha = 0.85; lg.fillRect(x + 3, h * (1 - v), w / 48 - 6, h * v);
+    }
+    lg.globalAlpha = 1;
+    if (logoImg.complete && logoImg.naturalWidth) {
+      const lh = h * 0.34, lw = lh * logoImg.naturalWidth / logoImg.naturalHeight;
+      lg.fillStyle = 'rgba(5,6,10,.55)'; lg.fillRect((w - lw) / 2 - 24, (h - lh) / 2 - 16, lw + 48, lh + 32);
+      lg.drawImage(logoImg, (w - lw) / 2, (h - lh) / 2, lw, lh);
+    }
+    ledTex.needsUpdate = true;
+  }
+  const booth = block(2.4, 1.0, 0.9, 0x0d0e12);
+  const panel = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 0.86), new THREE.MeshBasicMaterial({ map: ledTex, toneMapped: false }));
+  panel.position.set(0, 0.5, 0.452); booth.add(panel);
+  const stripMat = new THREE.MeshBasicMaterial({ color: 0xEB1B57, toneMapped: false });
+  for (const y of [0.02, 0.98]) { const st = new THREE.Mesh(new THREE.BoxGeometry(2.42, 0.03, 0.03), stripMat); st.position.set(0, y, 0.46); booth.add(st); }
+  const boothGlow = new THREE.PointLight(0xEB1B57, 18, 6); boothGlow.position.set(0, 0.5, 1.4); booth.add(boothGlow);
+  add(booth, BOOTH, 7, 0, [0, -2, 0]);
   place('cdj3000-djm-a9', { width: 2.2 }, [BOOTH[0], H + 1.0, BOOTH[2]], 7, 0.3, [0, 3, 0], [0, 0.5, 0]);
   place('sony-mdr-7506', { width: 0.24, rotX: -Math.PI / 2 + 0.2 }, [BOOTH[0] + 0.62, H + 1.12, BOOTH[2] + 0.12], 7, 0.65, [1, 2.5, 1.5], [0, 3, 0]);
 
   // beams from the moving heads: on for the concert section and the finished stage
-  const beamMat = new THREE.MeshBasicMaterial({ color: 0xEB1B57, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
-  const beams = heads.map((h) => {
-    const cone = new THREE.Mesh(new THREE.ConeGeometry(1.0, 5.6, 40, 1, true), beamMat);
+  const BEAM_COLORS = [0xEB1B57, 0x22D3EE, 0x7C3AED, 0xE2B04A];
+  const beamMats = heads.map((h, i) => new THREE.MeshBasicMaterial({ color: BEAM_COLORS[i], transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
+  const beams = heads.map((h, i) => {
+    const cone = new THREE.Mesh(new THREE.ConeGeometry(1.0, 5.6, 40, 1, true), beamMats[i]);
     cone.position.set(h.at.x, h.at.y - 3.1, h.at.z + 0.7);
     stage.add(cone); return cone;
   });
@@ -150,7 +180,7 @@ if (renderer) {
     S(4.5, 3.2, 7.5, 1.6, 1.4, 1.4),   // 6 corporate: monitors and mixer
     S(-2.6, 3.3, 4.4, -0.9, 2.05, -0.5), // 7 DJ booth
     S(13, 8, 25, -4.5, 2.6, 0),        // 8 divisions (stage right of the cards)
-    S(9, 6, 27, -5.2, 2.9, 0),         // 9 the finished stage, to the right of the contact card
+    S(0, 3.1, 9.6, -3.6, 2.0, -0.5),    // 9 finale: the lit DJ booth in full view, stage and beams behind
   ];
 
   // ---- scroll -----------------------------------------------------------------------------------------
@@ -201,9 +231,17 @@ if (renderer) {
       p.holder.position.copy(p.at).addScaledVector(p.from, 1 - e);
       p.holder.rotation.set(p.rot[0] * (1 - e), p.yaw + p.rot[1] * (1 - e), p.rot[2] * (1 - e));
     }
-    const lightsOn = (f > 2.6 && f < 3.6) || f > 8.5 || debugP;
-    beamMat.opacity += ((lightsOn ? 0.17 : 0) - beamMat.opacity) * L(3);
-    beams.forEach((b, i) => { b.rotation.z = (i - 1.5) * 0.16 + Math.sin(t * 0.8 + i * 1.3) * 0.14; });
+    // disco: once the heads are hung their beams stay on, sweep, and swap colours with the beat
+    const lightsOn = f > 2.6 || debugP;
+    beamMats.forEach((bm, i) => {
+      const pulse = 0.12 + 0.08 * Math.max(0, Math.sin(t * 3 + i * 1.7));
+      bm.opacity += ((lightsOn ? pulse : 0) - bm.opacity) * L(3);
+      bm.color.setHex(BEAM_COLORS[(i + Math.floor(t / 1.6)) % BEAM_COLORS.length]);
+    });
+    beams.forEach((b, i) => { b.rotation.z = (i - 1.5) * 0.16 + Math.sin(t * 0.9 + i * 1.3) * 0.28; b.rotation.x = Math.sin(t * 0.6 + i) * 0.18; });
+    drawLed(t);
+    const c = BEAM_COLORS[Math.floor(t / 1.6) % BEAM_COLORS.length];
+    stripMat.color.setHex(c); boothGlow.color.setHex(c);
 
     // camera between the two nearest shots; phones pull the camera back so the frame fits
     const i = Math.floor(f), k = smooth(f - i), a = SHOTS[i], b = SHOTS[Math.min(i + 1, SHOTS.length - 1)];
