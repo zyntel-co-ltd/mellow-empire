@@ -11,7 +11,7 @@ const words = [...document.querySelectorAll('.bigword span')];
 
 // header logo variant per world (a crimson disc vanishes on crimson; white words vanish on light pages)
 const logoImg = document.querySelector('header img');
-const LOGO = { navy: 'crimson_disk_white', crimson: 'white_disk_white', gold: 'crimson_disk_ink', ivory: 'crimson_disk_ink' };
+const LOGO = { peri: 'crimson_disk_ink', navy: 'crimson_disk_ink', crimson: 'crimson_disk_ink', gold: 'crimson_disk_ink', ivory: 'crimson_disk_ink' };
 let world = 'navy';
 function setWorld(w, wd) {
   if (w !== world) {
@@ -53,11 +53,13 @@ if (renderer) {
 
   // ---- palettes: [main, secondary, dark] per world -------------------------------------------------
   const P = {
-    navy:    { main: 0xEB1B57, alt: 0xffffff, dark: 0x0b0f2e, glow: 0x7C89FF },
-    crimson: { main: 0xffffff, alt: 0x0A1550, dark: 0x1a0610, glow: 0xffd1de },
-    gold:    { main: 0x0A1550, alt: 0xF6F1E7, dark: 0x2a1c05, glow: 0xffffff },
-    ivory:   { main: 0xEB1B57, alt: 0x0A1550, dark: 0x1b1d2e, glow: 0xffffff },
+    navy:    { main: 0xEB1B57, alt: 0x0A1550, dark: 0x1a1d33, glow: 0xEB1B57 },
+    crimson: { main: 0xEB1B57, alt: 0x0A1550, dark: 0x1a1d33, glow: 0xEB1B57 },
+    gold:    { main: 0xC98F1E, alt: 0x0A1550, dark: 0x2a1c05, glow: 0xC98F1E },
+    peri:    { main: 0x3F4FD6, alt: 0x0A1550, dark: 0x1a1d33, glow: 0x3F4FD6 },
+    ivory:   { main: 0x0A1550, alt: 0xEB1B57, dark: 0x1b1d2e, glow: 0x0A1550 },
   };
+
   const cur = { main: new THREE.Color(P.navy.main), alt: new THREE.Color(P.navy.alt), dark: new THREE.Color(P.navy.dark), glow: new THREE.Color(P.navy.glow) };
   const tgt = { main: new THREE.Color(), alt: new THREE.Color(), dark: new THREE.Color(), glow: new THREE.Color() };
   const mMain = new THREE.MeshStandardMaterial({ color: cur.main, roughness: 0.38, metalness: 0.15 });
