@@ -7,3 +7,5 @@ PROJECT_STATUS
 PROJECT_STATUS.md
 wrangler.jsonc
 .assetsignore
+tools
+node_modules

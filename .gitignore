@@ -4,3 +4,6 @@ Thumbs.db
 # Local AI codebase pack (Repomix; never commit)
 repomix-output.xml
 repomix-output.*.xml
+
+# logo tooling
+tools/logo/node_modules/
