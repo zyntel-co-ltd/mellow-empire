@@ -17,7 +17,8 @@ nav a{text-decoration:none;opacity:.85}nav a:hover{opacity:1}
 .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 1.4rem;border-radius:999px;background:var(--ink);color:#fff;font-weight:700;font-size:.85rem;text-decoration:none;border:0;cursor:pointer;transition:transform .2s,background .3s}
 .btn:hover{transform:translateY(-2px);background:var(--accent)}
 .btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}.btn.ghost:hover{background:transparent;box-shadow:inset 0 0 0 1.5px var(--accent);color:var(--accent)}
-main{position:relative;z-index:2}
+main{position:relative}
+main>section{position:relative;z-index:2}
 section{min-height:100vh;display:flex;align-items:center;padding:110px clamp(16px,6vw,96px) 80px}
 section.tall{min-height:130vh}
 .copy{max-width:520px}
@@ -48,3 +49,21 @@ footer{position:relative;z-index:2;padding:28px clamp(16px,6vw,96px);font-size:.
   nav .btn{padding:.55rem .95rem;font-size:.72rem;white-space:nowrap}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* the stage fills the screen; copy sits on a frosted card, low and to the left */
+section.tall{min-height:150vh;align-items:flex-end}
+.copy{background:rgba(251,250,247,.8);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:24px;padding:26px 28px;box-shadow:0 20px 50px -30px rgba(10,10,20,.35);max-width:min(500px,92vw)}
+.hero .copy{max-width:min(560px,92vw)}
+.wide .grid{max-width:min(980px,52vw)}
+.wide .grid .card{background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.quote{background:rgba(251,250,247,.8);padding:14px 18px;border-radius:16px;max-width:min(620px,52vw)}
+footer a{color:inherit}
+@media (max-width:900px){
+  section,section.tall{min-height:auto;padding-top:58vh;padding-bottom:40px}
+  section.hero{padding-top:62vh}
+  .wide .grid,.quote{max-width:none}
+}
+/* hero: the copy sits behind the headphones (canvas is z-index 1), no card, large and readable */
+main>section.hero{z-index:0}
+.hero .copy{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;max-width:min(760px,70vw)}
+.hero h1{font-size:clamp(3rem,8.4vw,7.4rem)}
+.hero .copy p{max-width:min(440px,80vw)}

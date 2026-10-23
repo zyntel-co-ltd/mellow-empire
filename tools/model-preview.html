@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><title>model preview</title>
+<style>body{margin:0;background:#FBFAF7;font:12px sans-serif}#info{position:fixed;top:0;left:0;padding:6px;white-space:pre}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script></head>
+<body><div id="info"></div><script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const names=['studio-headphones','cdj3000-djm-a9','dj-controller','yamaha-mg06','shure-sm58','mic-stand','stage-speaker','monitor-wedge','speaker-tripod','moving-head','truss-segment','concert-stage'];
+const r=new THREE.WebGLRenderer({antialias:true});r.setSize(innerWidth,innerHeight);r.toneMapping=THREE.ACESFilmicToneMapping;r.outputColorSpace=THREE.SRGBColorSpace;document.body.appendChild(r.domElement);
+const s=new THREE.Scene();s.background=new THREE.Color('#FBFAF7');s.environment=new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(),0.04).texture;
+const c=new THREE.PerspectiveCamera(35,innerWidth/innerHeight,0.1,200);c.position.set(0,6,30);c.lookAt(0,0,0);
+const L=new GLTFLoader();L.setMeshoptDecoder(MeshoptDecoder);
+const info=[];let i=0;
+for(const n of names){const k=i++;L.load('/assets/models/'+n+'.glb',g=>{const o=g.scene;const b=new THREE.Box3().setFromObject(o);const sz=b.getSize(new THREE.Vector3());const sc=2.6/Math.max(sz.x,sz.y,sz.z);o.scale.setScalar(sc);const b2=new THREE.Box3().setFromObject(o);const ce=b2.getCenter(new THREE.Vector3());o.position.sub(ce);const w=new THREE.Group();w.add(o);w.position.set(((k%6)-2.5)*4.2,k<6?3.2:-3.2,0);s.add(w);info[k]=`${k} ${n}: size ${sz.x.toFixed(2)} x ${sz.y.toFixed(2)} x ${sz.z.toFixed(2)}`;document.getElementById('info').textContent=info.filter(Boolean).join('\n');});}
+(function f(){r.render(s,c);requestAnimationFrame(f)})();
+</script></body></html>
