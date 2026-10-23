@@ -61,7 +61,7 @@ def text_path(text, weight, cap_height, tracking_em=0.02):
 
 # ---- mark ----------------------------------------------------------------------------------------
 def headset(fill, extra=""):
-    return f'<path fill="{fill}" {extra} d="{g.MARK_D}"/>'
+    return f'<path fill="{fill}" fill-rule="nonzero" {extra} d="{g.MARK_D}"/>'
 
 
 def mark_body(disc, fg=None, hole=False):
@@ -69,7 +69,7 @@ def mark_body(disc, fg=None, hole=False):
     if hole:
         return (f'<mask id="h" maskUnits="userSpaceOnUse" x="-{R:g}" y="{CY - R:g}" width="{D:g}" height="{D:g}">'
                 f'<rect x="-{R:g}" y="{CY - R:g}" width="{D:g}" height="{D:g}" fill="#fff"/>'
-                f'<path fill="#000" d="{g.MARK_D}"/></mask>'
+                f'<path fill="#000" fill-rule="nonzero" d="{g.MARK_D}"/></mask>'
                 f'<circle cx="0" cy="{CY:g}" r="{R:g}" fill="{disc}" mask="url(#h)"/>')
     return f'<circle cx="0" cy="{CY:g}" r="{R:g}" fill="{disc}"/>' + headset(fg)
 
