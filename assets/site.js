@@ -3,160 +3,112 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-// Real products on the page, at real proportions, moving with the page like any other content.
-// - One scale for every product (pixels per metre), set so the Sony headphones on the DJ console are
-//   big on screen; everything else follows from its real size, so speakers and decks can run past the edges.
-// - Each product belongs to a section and scrolls with it: it comes up from below, turns slowly while
-//   its section is in view, and leaves upwards. No fades.
-// - The hero headphones are the one exception: sized to fill the hero.
-// Camera is orthographic in CSS pixels, so a product's screen position is just its section's position.
-// Models: Sketchfab, CC BY (credits on /credits/).
-const canvas = document.getElementById('gl');
+// Homepage behaviour (ENG-89):
+// 1. Hero: Pioneer HDJ-X5 DJ headphones in 3D, turning slowly (drag to turn), in front of the headline.
+//    Model: Sketchfab, Free Standard licence (no credit required).
+// 2. Words: headings split into words that rise in one after another when they come into view.
+// 3. Photos: open from a mask and settle as they come into view, with a light parallax while scrolling.
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const sections = [...document.querySelectorAll('section[data-scene]')];
-let world = '';
-function setWorld(w) { if (w !== world) { world = w; document.body.dataset.world = w; } }
+const sections = [...document.querySelectorAll('section[data-world]')];
 
-let renderer;
-try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); }
-catch (e) { document.body.classList.add('no-gl'); }
+// ---- words ----------------------------------------------------------------------------------------
+for (const el of document.querySelectorAll('.split')) {
+  const words = [];
+  const walk = (node) => {
+    for (const n of [...node.childNodes]) {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.append(part); return; }
+          const w = document.createElement('span'); w.className = 'w';
+          const i = document.createElement('span'); i.textContent = part; w.append(i);
+          frag.append(w); words.push(i);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) walk(n);
+    }
+  };
+  walk(el);
+  words.forEach((w, i) => { w.style.transitionDelay = `${i * 70}ms`; });
+}
+
+// ---- reveal on scroll (plain rect checks; works even where IntersectionObserver is throttled) -------
+let pending = [...document.querySelectorAll('.split, .rise, .shot')];
+const shots = [...document.querySelectorAll('.shot')];
+function onScroll() {
+  const h = innerHeight;
+  pending = pending.filter((el) => {
+    const r = el.getBoundingClientRect();
+    if (reduce || (r.top < h * 0.86 && r.bottom > 0)) { el.classList.add('in'); return false; }
+    return true;
+  });
+  if (!reduce) for (const s of shots) {
+    const r = s.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > h) continue;
+    const off = (r.top + r.height / 2 - h / 2) / h;         // -0.5 .. 0.5 while on screen
+    s.firstElementChild.style.translate = `0 ${(off * -6).toFixed(2)}%`;
+  }
+  const mid = sections.find((s) => { const r = s.getBoundingClientRect(); return r.top <= h / 2 && r.bottom > h / 2; });
+  if (mid && document.body.dataset.world !== mid.dataset.world) document.body.dataset.world = mid.dataset.world;
+}
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', onScroll);
+requestAnimationFrame(onScroll);
+
+// ---- hero headphones --------------------------------------------------------------------------------
+const canvas = document.getElementById('gl');
+let renderer = null;
+try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); } catch (e) { canvas.remove(); }
 
 if (renderer) {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
-
+  renderer.toneMappingExposure = 1.05;
   const scene = new THREE.Scene();
   scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -20000, 20000);
-  camera.position.set(0, 0, 5000);
-
-  const key = new THREE.DirectionalLight(0xffffff, 2.0); key.position.set(0.6, 1, 0.8);
-  const fill = new THREE.DirectionalLight(0xffffff, 0.9); fill.position.set(-0.8, 0.4, 0.6);
-  const rim = new THREE.DirectionalLight(0xdde4ff, 1.1); rim.position.set(0, 0.6, -1);
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 50);
+  camera.position.set(0, 0.15, 3.2); camera.lookAt(0, 0, 0);
+  const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(2, 3, 3);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.9); fill.position.set(-3, 1, 2);
+  const rim = new THREE.DirectionalLight(0xdde4ff, 1.4); rim.position.set(0, 2, -3);
   scene.add(key, fill, rim, new THREE.HemisphereLight(0xffffff, 0xe6e2da, 0.6));
 
+  const pivot = new THREE.Group(); scene.add(pivot);
   const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
-  const load = (name) => new Promise((res, rej) => loader.load(`/assets/models/${name}.glb`, (g) => res(g.scene), undefined, rej));
+  loader.load('/assets/models/pioneer-hdj-x5.glb', (g) => {
+    const o = g.scene;
+    const b = new THREE.Box3().setFromObject(o), s = b.getSize(new THREE.Vector3()), c = b.getCenter(new THREE.Vector3());
+    o.position.sub(c); o.scale.multiplyScalar(1 / Math.max(s.x, s.y, s.z));      // fits a 1 x 1 x 1 box, centred
+    o.traverse((m) => { if (m.isMesh) for (const mat of [].concat(m.material)) if (mat && 'envMapIntensity' in mat) mat.envMapIntensity = 1.2; });
+    pivot.add(o);
+  });
 
-  // normalise to a real size in metres, grounded at y=0, centred on x/z
-  function fit(src, { height, width, rotX = 0, rotY = 0, rotZ = 0 }) {
-    const o = src.clone(true);
-    o.rotation.set(rotX, rotY, rotZ); o.updateMatrixWorld(true);
-    let b = new THREE.Box3().setFromObject(o);
-    const s = b.getSize(new THREE.Vector3());
-    o.scale.multiplyScalar(height ? height / s.y : width / s.x); o.updateMatrixWorld(true);
-    b = new THREE.Box3().setFromObject(o);
-    const c = b.getCenter(new THREE.Vector3());
-    o.position.x -= c.x; o.position.z -= c.z; o.position.y -= b.min.y;
-    o.traverse((m) => { if (m.isMesh) for (const mat of [].concat(m.material)) if (mat && 'envMapIntensity' in mat) mat.envMapIntensity = 1.1; });
-    const g = new THREE.Group(); g.add(o); return g;
+  const hero = canvas.parentElement;
+  function resize() {
+    const w = hero.clientWidth, h = hero.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
   }
+  addEventListener('resize', resize); resize();
 
-  // a soft contact shadow, drawn once (the camera looks straight on, so it is a flat ellipse under the base)
-  const shadowTex = (() => {
-    const c = document.createElement('canvas'); c.width = c.height = 256;
-    const g = c.getContext('2d'); const r = g.createRadialGradient(128, 128, 0, 128, 128, 128);
-    r.addColorStop(0, 'rgba(10,21,80,.30)'); r.addColorStop(0.6, 'rgba(10,21,80,.10)'); r.addColorStop(1, 'rgba(10,21,80,0)');
-    g.fillStyle = r; g.fillRect(0, 0, 256, 256);
-    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
-  })();
-
-  // real sizes in metres. Scene 1 is the DJ console with the Sony MDR-7506 resting on it.
-  // tilt: lean flat products toward the viewer so their tops are seen
-  const PRODUCTS = {
-    0: { parts: [{ m: 'beats-mixr-red', height: 0.19 }], hero: true },
-    1: { parts: [{ m: 'cdj3000-djm-a9', width: 1.13 }, { m: 'sony-mdr-7506', width: 0.19, x: 0.36, y: 0.085, z: 0.05, rotX: -Math.PI / 2 + 0.25 }], tilt: 0.55 },
-    2: { parts: [{ m: 'stage-speaker', height: 0.75 }] },
-    3: { parts: [{ m: 'shure-sm58', width: 0.162, rotZ: 0.18 }], tilt: 0.25 },
-    4: { parts: [{ m: 'moving-head', height: 0.48 }] },
-    5: { parts: [{ m: 'yamaha-mg06', width: 0.149 }], tilt: 0.6 },
-    6: { parts: [{ m: 'monitor-wedge', width: 0.55 }] },
-  };
-
-  const items = [];
-  for (const [id, P] of Object.entries(PRODUCTS)) {
-    const section = sections.find((s) => s.dataset.scene === id);
-    if (!section) continue;
-    const root = new THREE.Group(); scene.add(root);
-    const tilt = new THREE.Group(); tilt.rotation.x = P.tilt || 0; root.add(tilt);
-    const turn = new THREE.Group(); tilt.add(turn);
-    const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false }));
-    shadow.renderOrder = -1; root.add(shadow);
-    const it = { id: +id, P, section, root, turn, shadow, size: new THREE.Vector3(1, 1, 1), ready: 0, spin: Math.random() * 6 };
-    items.push(it);
-    P.parts.forEach((p) => load(p.m).then((src) => {
-      const o = fit(src, p); o.position.set(p.x || 0, p.y || 0, p.z || 0); turn.add(o);
-      // footprint of the whole product (all parts), in metres
-      const b = new THREE.Box3().setFromObject(turn); b.getSize(it.size);
-      turn.position.y = -it.size.y / 2;          // pivot at the product's centre, so it turns and tilts in place
-      it.ready++; layout();
-    }).catch((e) => console.warn('model', p.m, e)));
-  }
-
-  // ---- layout: pixels per metre, section heights, and where each product sits -----------------------
-  const mobile = () => innerWidth < 900;
-  let pxPerM = 1;
-  // on-screen height of a product at scale k: it turns and may be tilted, so use its bounding sphere
-  function screenHeight(it, k) { return Math.hypot(it.size.x, it.size.y, it.size.z) * k; }
-  function heroScale(it) { return (mobile() ? innerHeight * 0.42 : innerHeight * 0.88) / Math.max(it.size.y, 0.01); }
-  function layout() {
-    const w = innerWidth, h = innerHeight, m = mobile();
-    renderer.setSize(w, h, false);
-    Object.assign(camera, { left: -w / 2, right: w / 2, top: h / 2, bottom: -h / 2 }); camera.updateProjectionMatrix();
-        // the Sony headphones (0.19 m) are 55% of the screen height on a computer; on a phone 12%, so a
-    // 0.75 m speaker is about half a screen and the decks run just past the edges
-    pxPerM = (m ? h * 0.12 : h * 0.55) / 0.19;
-    for (const it of items) {
-      if (!it.ready || it.P.hero) continue;
-      const ph = screenHeight(it, pxPerM);
-      // the section is as tall as its product, so the product passes through the screen with it
-      if (m) { it.section.style.paddingTop = Math.round(Math.min(ph, h * 1.6) + 70) + 'px'; it.section.style.minHeight = ''; }
-      else { it.section.style.minHeight = Math.round(Math.max(h * 0.75, ph * 1.05 + 80)) + 'px'; it.section.style.paddingTop = ''; }   // room so neighbours never overlap
-    }
-  }
-  addEventListener('resize', layout); layout();
-
-  function readScroll() {
-    const mid = innerHeight / 2;
-    const s = sections.find((el) => { const r = el.getBoundingClientRect(); return r.top <= mid && r.bottom > mid; }) || sections[0];
-    setWorld(s.dataset.world);
-  }
-  addEventListener('scroll', readScroll, { passive: true }); readScroll();
-
-  // drag (outside the text) to turn the product under the pointer's section
   let dragging = false, lastX = 0, drag = 0;
-  addEventListener('pointerdown', (e) => { if (!e.target.closest('a,button,.copy,header,footer')) { dragging = true; lastX = e.clientX; } });
+  hero.addEventListener('pointerdown', (e) => { if (!e.target.closest('a,button')) { dragging = true; lastX = e.clientX; } });
   addEventListener('pointermove', (e) => { if (dragging) { drag += (e.clientX - lastX) * 0.01; lastX = e.clientX; } }, { passive: true });
   addEventListener('pointerup', () => { dragging = false; });
 
-  const clock = new THREE.Clock(); let last = 0;
-  function frame() {
-    const t = clock.getElapsedTime();
-    const dt = Math.min(t - last, 0.1); last = t;
-    const w = innerWidth, h = innerHeight, m = mobile();
-    for (const it of items) {
-      if (!it.ready) { it.root.visible = false; continue; }
-      const r = it.section.getBoundingClientRect();
-      const k = it.P.hero ? heroScale(it) : pxPerM;
-      const ph = screenHeight(it, k);
-      // vertical: centred in its section (phones: in the space above the copy); converts CSS px to camera units
-      const cy = m ? r.top + 50 + Math.min(ph, h * 1.6) / 2 : r.top + r.height / 2;
-      const onScreen = cy + ph / 2 > -200 && cy - ph / 2 < h + 200;
-      it.root.visible = onScreen;
-      if (!onScreen) continue;
-      const x = m ? 0 : w * (it.P.hero ? 0.2 : 0.22);
-      it.root.position.set(x, h / 2 - cy, 0);
-      it.root.scale.setScalar(k);
-      it.spin += (reduce ? 0 : 0.3) * dt;
-      it.turn.rotation.y = it.spin + drag;
-      const foot = Math.hypot(it.size.x, it.size.z);
-      it.shadow.scale.set(foot * 1.2, foot * 0.22, 1);
-      it.shadow.position.set(0, -ph / k / 2 * 0.92, -foot);
-    }
-    renderer.render(scene, camera);
+  const clock = new THREE.Clock(); let last = 0, spin = -0.6;
+  (function frame() {
+    const t = clock.getElapsedTime(), dt = Math.min(t - last, 0.1); last = t;
+    const m = innerWidth < 900;
+    // frame from what the camera sees: right of centre and large on computers, top half on phones
+    const visH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z, visW = visH * camera.aspect;
+    const size = m ? Math.min(visH * 0.4, visW * 0.8) : Math.min(visH * 0.84, visW * 0.46);
+    pivot.scale.setScalar(size);
+    pivot.position.set(m ? 0 : visW * 0.27, m ? visH * 0.27 : -visH * 0.02, 0);
+    spin += (reduce ? 0 : 0.32) * dt;
+    pivot.rotation.set(0.12, spin + drag, 0);
+    if (hero.getBoundingClientRect().bottom > 0) renderer.render(scene, camera);
     requestAnimationFrame(frame);
-  }
-  frame();
+  })();
 }

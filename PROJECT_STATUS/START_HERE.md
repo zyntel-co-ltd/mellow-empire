@@ -5,7 +5,7 @@
 **Status:** Live
 **Production URL:** https://mellowempire.com (Cloudflare Workers static assets; every push to `main` deploys)
 **Repo:** github.com/zyntel-co-ltd/mellow-empire
-**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-88 (real scale, scroll with the page, navy), ENG-86 (waiting on owner)
+**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-88 (real scale, navy), ENG-89 (photos, 3D only in the hero, animated words, no credits page), ENG-86 (waiting on owner)
 
 ---
 
@@ -13,29 +13,28 @@
 
 The website of **Mellow Empire**, a Kampala business-solutions company (event production, AV, church technology, corporate training, creative). Mellow Empire is the parent brand. **Mellow Sounds 256** (DJing and sound-system hire, social handle `mellowsounds256`) is the live child brand. Event production and a school of music are planned divisions with no names yet.
 
-## How the homepage works (ENG-88, 2026-10-24)
+## How the homepage works (ENG-89, 2026-10-24)
 
 | Part | What it does |
 |---|---|
-| Hero | Red Beats headphones fill most of the hero (88% of the screen height on a computer) and turn slowly; the headline sits **behind** them |
-| Sections | One real product per section, **at real proportions**: one scale (pixels per metre) for every product, set so the Sony MDR-7506 headphones resting on the DJ decks are 55% of the screen height (12% on phones). Big items (decks, speaker, monitor) run past the edges on purpose |
-| Motion | Products move with the page: each comes up from below with its section, turns slowly while in view (drag to turn), and leaves upwards. No fades, no flying in |
-| Sizing | `site.js` sets each product section's height from its product, so neighbours never overlap and there is no empty space between them |
-| Colour | Navy is the text and button colour; crimson and the section accent mark one word and the label. White page |
-| No repeats | Each model appears once: Beats (hero), decks + Sony (DJs), speaker, SM58, moving head, mixer, monitor |
+| Hero | Pioneer HDJ-X5 DJ headphones in 3D (the only 3D on the site), turning slowly, drag to turn; the headline sits behind them in the left half |
+| Services | Large photographs of African and Ugandan events (DJ, wedding dancing, outdoor concert on truss, singer, stage lighting, choir and sound desk, MC, traditional dancers, stage performers), each used once, alternating left and right; two are full-width banners with the copy on a card |
+| Motion | Headings rise in word by word; paragraphs and buttons fade up; photos open from a mask and settle, with a light parallax while scrolling |
+| Colour | Navy text and buttons; crimson or the section accent on one word and the label. White page |
 
-Files: `index.html`, `assets/site.css`, `assets/site.js` (Three.js 0.160, orthographic camera in CSS pixels), `assets/models/*.glb`. Real sizes per product: `PRODUCTS` in `site.js`. Bump `?v=` on the CSS/JS links in all pages after a change.
+Files: `index.html`, `assets/site.css`, `assets/site.js`, `assets/photos/<name>-1200.jpg` and `-2400.jpg` (served with `srcset`), `assets/models/pioneer-hdj-x5.glb`.
 
-Normal: each product scrolls in step with its text. Broken: a blank gap where a product should be (model failed to load: console, `assets/models/`), or two products overlapping (section height in `layout()`).
+Licences: photos are from Unsplash (free for commercial use, no credit required). The headphones model is Sketchfab "Free Standard" (as stated by Sketchfab, no credit required). That is why there is no credits page. **Any new 3D model must also be CC0 or Free Standard**, or it needs a visible credit.
+
+Normal: headline words rise in on load, photos open as they come into view. Broken: text that never appears (check the console; `.split`, `.rise` and `.shot` get the class `in` from `site.js`), or an empty hero (the model failed to load).
 
 ## Other pages
 
 - `/about/`: company story and the CEO, Darius Buwembo. The headshot is a placeholder (initials). Replace it with `<img src="/assets/team/darius-buwembo.jpg">` when the photo arrives.
-- `/credits/`: attributions for the CC-BY 3D models (required by the licence). It is linked only from a small footer link, by the owner's choice.
 
 ## 3D models
 
-- **Source:** Sketchfab, CC Attribution, listed in `assets/models/credits.json` and on `/credits/`. Any new model must be added to both.
+- **Source:** only the hero model is used: Pioneer HDJ-X5 by jeff.kershaw on Sketchfab, Free Standard licence (no credit required). Search with `licenses=cc0` or `licenses=free-st` so no credit is needed.
 - **Download:** use the Sketchfab API with the token in `D:\zyntel\tempo` (never print it).
 - **Optimise:** `npx @gltf-transform/cli@4 optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 2048`.
 - **Preview:** `tools/model-preview.html` shows every model in a grid with its raw size, to check orientation and scale before placing it.
@@ -57,7 +56,8 @@ Push to `main` and Cloudflare builds automatically (`npx wrangler deploy`, asset
 - Real proportions between products, no repeated images, no fades: products travel with the page (owner, 2026-10-24).
 - Navy must be visible: it is the text and button colour.
 - The traced version of the owner's headset beat the geometric redraws. Keep its organic ear-cups.
-- Credits go on their own page, never in the content.
+- No credits page and no designer callouts: use only assets that need no credit.
+- 3D only in the hero; photographs elsewhere, of African/Ugandan events at the quality of adlib.co.uk.
 
 ## Open items
 
