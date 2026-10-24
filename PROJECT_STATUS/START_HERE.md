@@ -1,11 +1,11 @@
 # Mellow Empire — Start Here
 
-**Last updated:** 2026-10-24
+**Last updated:** 2026-10-24 (ENG-87)
 **Product type:** Client static site (no build step)
 **Status:** Live
 **Production URL:** https://mellowempire.com (Cloudflare Workers static assets; every push to `main` deploys)
 **Repo:** github.com/zyntel-co-ltd/mellow-empire
-**Work items:** Plane ENG-85
+**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-86 (waiting on owner)
 
 ---
 
@@ -13,22 +13,18 @@
 
 The website of **Mellow Empire**, a Kampala business-solutions company (event production, AV, church technology, corporate training, creative). Mellow Empire is the parent brand. **Mellow Sounds 256** (DJing and sound-system hire, social handle `mellowsounds256`) is the live child brand. Event production and a school of music are planned divisions with no names yet.
 
-## How the homepage works
+## How the homepage works (ENG-87, 2026-10-24)
 
 | Part | What it does |
 |---|---|
-| Hero | Red Beats headphones (3D) fill the screen; the headline sits **behind** them and stays readable |
-| 10 sections | Each section adds real stage gear while the camera moves in for a close shot: deck, truss, moving heads, PA, tripod speakers, mic stand + SM58, monitors + mixer, DJ booth |
-| Finale | The DJ booth in full view: LED facade with the logo and an equaliser, colour light strips, beams behind |
-| Disco lights | Soft colour pools and two sweeping beams on every page (`.disco` in `assets/site.css`) |
-| Colour | White page everywhere. Brand colours only on words, labels and lights, never full backgrounds |
+| Hero | Red Beats headphones (real 3D model) turn a full circle so every side is seen; the headline sits **behind** them and stays readable |
+| Sections | One real product per section, shown like a studio product shot: grounded on a soft shadow, turning slowly (visitors can drag to turn it), cross-fading to the next product. DJ decks, speakers, SM58, moving-head light, mixer, monitor + mic stand |
+| Copy | Plain marketing copy: what is provided, for which events, how to book. No invented claims |
+| Colour | White page everywhere; brand colours only on a highlighted word and the section label |
 
-Files: `index.html`, `assets/site.css`, `assets/site.js` (Three.js 0.160 from jsDelivr via import map), `assets/models/*.glb`.
+Files: `index.html`, `assets/site.css`, `assets/site.js` (Three.js 0.160 via import map), `assets/models/*.glb`. The products per section are `SHOTS` in `site.js`; `TILT` leans flat products (decks, mixer) toward the viewer. Bump the `?v=` on the CSS/JS links in all pages when they change.
 
-- **Camera shots:** `SHOTS` in `site.js`, one `[position, look-at]` per section.
-- **Gear placement:** the build list in `site.js` (`place(...)`): real size in metres, the section it arrives in, and where it flies in from.
-- **Check the finished stage without scrolling:** open `/?p=1`.
-- **Cache:** bump the `?v=` on the CSS/JS links in every page when they change.
+Normal: on load the headphones appear on the right (top on phones) and turn; scrolling swaps the product with a short fade. Broken: an empty right side (a model failed to load: check the browser console and `assets/models/`), or a product cut off at the edge (framing in `frame()`).
 
 ## Other pages
 
@@ -54,7 +50,8 @@ Push to `main` and Cloudflare builds automatically (`npx wrangler deploy`, asset
 
 - Real gear only: no cartoon or primitive props, no unrelated stand-ins (chandelier, megaphone, suitcase), no stock lifestyle photos.
 - A clean white page like the reference video. No full-colour backgrounds and no giant watermark words.
-- The stage is centred and in proportion, not squeezed to one side, and the page ends on the lit DJ booth.
+- No assembling stage, no flying-in pieces, no disco lights (owner, 2026-10-24: looked unreal). One real product per section instead.
+- Copy must read like a real marketer wrote it: concrete, plain, no hype.
 - The traced version of the owner's headset beat the geometric redraws. Keep its organic ear-cups.
 - Credits go on their own page, never in the content.
 
