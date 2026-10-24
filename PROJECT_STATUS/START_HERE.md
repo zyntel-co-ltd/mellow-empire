@@ -19,7 +19,7 @@ It is a working site for **Mellow Empire**, not a brochure: visitors hire equipm
 
 | Page / part | What it does |
 |---|---|
-| Home hero | Pioneer HDJ-X5 DJ headphones in 3D (the only 3D on the site), headline behind them. Buttons: Build a quote, Browse equipment |
+| Home hero | Red Beats Mixr headphones in 3D (the only 3D on the site, the owner's choice), headline behind them. Buttons: Build a quote, Browse equipment |
 | Start here | Three paths: Hire equipment (to `/hire/`), Book a DJ, Set up the whole event (both open the quote with services ticked) |
 | Divisions | Mellow Empire's divisions as colour worlds: Mellow Sounds 256 (crimson, live), Event production (blue, coming soon), School of music (gold, coming soon) |
 | What we set up | Six equipment groups with setup photos, each opening `/hire/` at that group |
@@ -40,7 +40,7 @@ Normal: the badge in the header shows the item count; "Send on WhatsApp" opens W
 
 ## 3D models
 
-- **Source:** only the hero model is used: Pioneer HDJ-X5 by jeff.kershaw on Sketchfab, Free Standard licence (no credit required). Search with `licenses=cc0` or `licenses=free-st` so no credit is needed.
+- **Source:** only the hero model is used: Beats Mixr by HectorValenzuela (CC BY 4.0, credited in the footer). For credit-free models search with `licenses=cc0` or `licenses=free-st`.
 - **Download:** use the Sketchfab API with the token in `D:\zyntel\tempo` (never print it).
 - **Optimise:** `npx @gltf-transform/cli@4 optimize in.glb out.glb --compress meshopt --texture-compress webp --texture-size 2048`.
 - **Preview:** `tools/model-preview.html` shows every model in a grid with its raw size, to check orientation and scale before placing it.

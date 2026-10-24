@@ -142,3 +142,4 @@ footer{padding:26px clamp(16px,6vw,96px) 90px;font-size:.82rem;color:var(--muted
   html{scroll-behavior:auto}
   .shot,.shot img,.split .w>span,.rise{transition:none;transform:none;opacity:1;clip-path:none}
 }
+footer .credit{flex-basis:100%;font-size:.68rem;opacity:.55}

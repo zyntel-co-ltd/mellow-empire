@@ -3,8 +3,9 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-// Home hero (ENG-90): Pioneer HDJ-X5 DJ headphones in 3D, turning slowly (drag to turn), in front of the
-// headline. Model: Sketchfab, Free Standard licence (no credit required). Reveals and the quote are in ui.js.
+// Home hero (ENG-90): red Beats Mixr headphones in 3D, turning slowly (drag to turn), in front of the headline.
+// Model: "Audifonos Beats Mixr" by HectorValenzuela (Sketchfab), CC BY 4.0: the licence requires the one-line
+// credit in the footer of index.html. Do not remove it while this model is used. Reveals and the quote are in ui.js.
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ---- hero headphones --------------------------------------------------------------------------------
@@ -16,7 +17,7 @@ if (renderer) {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 0.95;   // keeps the red rich without blowing out
   const scene = new THREE.Scene();
   scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
   const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 50);
@@ -28,10 +29,12 @@ if (renderer) {
 
   const pivot = new THREE.Group(); scene.add(pivot);
   const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
-  loader.load('/assets/models/pioneer-hdj-x5.glb', (g) => {
+  loader.load('/assets/models/beats-mixr-red.glb', (g) => {
     const o = g.scene;
-    const b = new THREE.Box3().setFromObject(o), s = b.getSize(new THREE.Vector3()), c = b.getCenter(new THREE.Vector3());
-    o.position.sub(c); o.scale.multiplyScalar(1 / Math.max(s.x, s.y, s.z));      // fits a 1 x 1 x 1 box, centred
+    // fit a 1 x 1 x 1 box first, then centre (centring before scaling leaves the model off to one side)
+    let b = new THREE.Box3().setFromObject(o); const s = b.getSize(new THREE.Vector3());
+    o.scale.multiplyScalar(1 / Math.max(s.x, s.y, s.z)); o.updateMatrixWorld(true);
+    b = new THREE.Box3().setFromObject(o); o.position.sub(b.getCenter(new THREE.Vector3()));
     o.traverse((m) => { if (m.isMesh) for (const mat of [].concat(m.material)) if (mat && 'envMapIntensity' in mat) mat.envMapIntensity = 1.2; });
     pivot.add(o);
   });
@@ -54,7 +57,7 @@ if (renderer) {
     const m = innerWidth < 900;
     // frame from what the camera sees: right of centre and large on computers, top half on phones
     const visH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z, visW = visH * camera.aspect;
-    const size = m ? Math.min(visH * 0.4, visW * 0.8) : Math.min(visH * 0.84, visW * 0.46);
+    const size = m ? Math.min(visH * 0.4, visW * 0.8) : Math.min(visH * 0.76, visW * 0.44);
     pivot.scale.setScalar(size);
     pivot.position.set(m ? 0 : visW * 0.27, m ? visH * 0.27 : -visH * 0.02, 0);
     spin += (reduce ? 0 : 0.32) * dt;
