@@ -11,3 +11,7 @@ tools/logo/node_modules/
 # local worker secrets
 .dev.vars
 .wrangler/
+
+# logo tooling scratch
+tools/logo/__pycache__/
+tools/logo/brand_kit_renders.json
