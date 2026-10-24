@@ -262,10 +262,13 @@ if (renderer) {
       const fwd = camera.getWorldDirection(new THREE.Vector3());
       const right = new THREE.Vector3().crossVectors(fwd, camera.up).normalize();
       const dist = m ? 3.6 : 2.7;
+      // size and place the headphones from what the camera actually sees, so every screen shape frames them the same
+      const visH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * dist, visW = visH * camera.aspect;
+      const size = Math.min(visH * (m ? 0.5 : 0.78), visW * (m ? 0.8 : 0.5) / 0.95);
       const pos = camera.position.clone().addScaledVector(fwd, dist)
-        .addScaledVector(right, (m ? 0 : 0.78) + out * 2.5).addScaledVector(camera.up, (m ? 0.35 : 0) + out * 1.6);
+        .addScaledVector(right, (m ? 0 : visW * 0.2) + out * 2.5).addScaledVector(camera.up, (m ? visH * 0.18 : 0) + out * 1.6);
       phones.position.lerp(pos, L(8));
-      phones.scale.setScalar((m ? 1.15 : 1.45) * (1 - out * 0.6));
+      phones.scale.setScalar(size * (1 - out * 0.6));
       phones.quaternion.copy(camera.quaternion);
       phones.rotateY(-0.45 + Math.sin(t * 0.35) * 0.18 + mx * 0.6 + out * 2);
       phones.rotateX(0.18 + my * 0.25);
