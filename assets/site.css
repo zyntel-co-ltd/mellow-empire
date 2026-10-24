@@ -128,6 +128,7 @@ footer{padding:26px clamp(16px,6vw,96px) 90px;font-size:.82rem;color:var(--muted
   header nav a:not(.btn){display:none}
   header nav .btn{padding:.55rem .95rem;font-size:.74rem;white-space:nowrap}
   header img{height:30px}
+  footer .credits-panel{right:auto;left:0}
   .hero{align-items:flex-end;padding-top:calc(40vh + var(--hdr,55px));min-height:auto;padding-bottom:48px}
   .hero .copy{max-width:none}
   h1{font-size:clamp(2.3rem,10.5vw,3.3rem)}
@@ -142,7 +143,12 @@ footer{padding:26px clamp(16px,6vw,96px) 90px;font-size:.82rem;color:var(--muted
   html{scroll-behavior:auto}
   .shot,.shot img,.split .w>span,.rise{transition:none;transform:none;opacity:1;clip-path:none}
 }
-footer .credit{flex-basis:100%;font-size:.68rem;opacity:.55}
+/* footer credits (the 3D model licence, CC BY 4.0, requires this credit to stay on the page): a small link that opens a panel */
+footer .credits{position:relative;font-size:.74rem}
+footer .credits summary{cursor:pointer;list-style:none;opacity:.7}footer .credits summary::-webkit-details-marker{display:none}footer .credits summary:hover{opacity:1;color:var(--crimson)}
+footer .credits-panel{position:absolute;bottom:calc(100% + 10px);right:0;width:min(320px,calc(100vw - 32px));background:#fff;color:var(--navy);border:1px solid var(--line);border-radius:12px;padding:14px 36px 14px 16px;box-shadow:0 20px 40px -18px rgba(10,21,80,.35);z-index:5}
+footer .credits-panel p{margin:0;line-height:1.5}
+footer .credits-close{position:absolute;top:6px;right:8px;border:0;background:none;font-size:1.3rem;line-height:1;cursor:pointer;color:var(--muted)}footer .credits-close:hover{color:var(--crimson)}
 /* v6 (ENG-91): big photos alternating left and right, bleeding to the page edge and fading into the page */
 .feature{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center;padding:clamp(28px,5vh,56px) clamp(16px,6vw,96px) clamp(28px,5vh,56px) 0;min-height:78vh}
 .feature.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);padding:clamp(28px,5vh,56px) 0 clamp(28px,5vh,56px) clamp(16px,6vw,96px)}

@@ -1,10 +1,11 @@
 // Mellow Empire site worker: serves the static site, plus POST /api/quote, which emails a quote request
 // to Mellow through Resend. Everything else goes straight to the static files (assets binding).
 // Secret: RESEND_API_KEY (set with `npx wrangler secret put RESEND_API_KEY`, never in this repo).
-// The sender is on zyntel.net (the Resend domain already verified); mellowempire.com can replace it once that
-// domain is verified in Resend.
+// Sender: mellowempire.com (added to Resend; verified once its DNS records are in Cloudflare). Until Resend accepts
+// that domain, the send is retried from zyntel.net (already verified), so no quote is lost either way.
 const TO = 'mellowsounds256@gmail.com';
-const FROM = 'Mellow Empire website <website@zyntel.net>';
+const FROM = 'Mellow Empire website <website@mellowempire.com>';
+const FALLBACK_FROM = 'Mellow Empire website <website@zyntel.net>';
 
 const FIELDS = { type: 'Event', date: 'Date', venue: 'Venue', guests: 'Guests', services: 'Services', notes: 'Notes', name: 'Name', phone: 'Phone' };
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
@@ -30,11 +31,14 @@ async function quote(request, env) {
 ${equipment.length ? `<p style="font-family:sans-serif"><b>Equipment</b></p><ul style="font-family:sans-serif">${equipment.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>` : ''}
 <p style="font-family:sans-serif;color:#666">Reply by phone or WhatsApp: ${esc(f.phone)}</p>`;
 
-  const r = await fetch('https://api.resend.com/emails', {
+  const subject = `Quote request: ${f.name}${f.type ? `, ${f.type}` : ''}${f.date ? `, ${f.date}` : ''}`;
+  const send = (from) => fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ from: FROM, to: [TO], subject: `Quote request: ${f.name}${f.type ? `, ${f.type}` : ''}${f.date ? `, ${f.date}` : ''}`, text, html }),
+    body: JSON.stringify({ from, to: [TO], subject, text, html }),
   });
+  let r = await send(FROM);
+  if (r.status === 403 || r.status === 422) { console.log('primary sender refused', r.status, await r.text()); r = await send(FALLBACK_FROM); }
   if (!r.ok) { console.log('resend failed', r.status, await r.text()); return json({ error: 'send failed' }, 502); }
   return json({ ok: true });
 }

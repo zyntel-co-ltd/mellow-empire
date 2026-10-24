@@ -156,6 +156,14 @@
     form.addEventListener('submit', (e) => e.preventDefault());
   }
 
+  // ---- footer credits: close with the button, Escape, or a click anywhere else ---------------------------
+  const credits = document.querySelector('footer .credits');
+  if (credits) {
+    credits.querySelector('.credits-close').addEventListener('click', () => { credits.open = false; });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') credits.open = false; });
+    document.addEventListener('click', (e) => { if (credits.open && !credits.contains(e.target)) credits.open = false; });
+  }
+
   addEventListener('storage', (e) => { if (e.key === KEY) { memo = read(); render(); } });
   render();
 })();
