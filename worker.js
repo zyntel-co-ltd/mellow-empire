@@ -3,7 +3,7 @@
 // Secret: RESEND_API_KEY (set with `npx wrangler secret put RESEND_API_KEY`, never in this repo).
 // Sender: mellowempire.com (added to Resend; verified once its DNS records are in Cloudflare). Until Resend accepts
 // that domain, the send is retried from zyntel.net (already verified), so no quote is lost either way.
-const TO = 'dariusbuwembo@mellowempire.com';
+const TO = ['sales@mellowempire.com', 'dariusbuwembo@mellowempire.com'];
 const FROM = 'Mellow Empire website <website@mellowempire.com>';
 const FALLBACK_FROM = 'Mellow Empire website <website@zyntel.net>';
 
@@ -35,7 +35,7 @@ ${equipment.length ? `<p style="font-family:sans-serif"><b>Equipment</b></p><ul 
   const send = (from) => fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ from, to: [TO], subject, text, html }),
+    body: JSON.stringify({ from, to: TO, subject, text, html }),
   });
   let r = await send(FROM);
   if (r.status === 403 || r.status === 422) { console.log('primary sender refused', r.status, await r.text()); r = await send(FALLBACK_FROM); }
