@@ -26,8 +26,10 @@ let renderer = null;
 try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !software, powerPreference: 'high-performance' }); } catch (e) { canvas.remove(); }
 
 if (renderer) {
-  // pixel ratio capped at 1.5 (a full-hero canvas at 2x is ~5 million pixels a frame); lowered further below if frames run slow
-  let ratio = software ? 0.75 : Math.min(devicePixelRatio, 1.5);
+  // Sharp first: render at the screen's own density (up to 2x for high-density and 4K screens) and never below 1x, so
+  // the model is never pixelated on a GPU. Only software rendering (no GPU) starts lower.
+  const sharp = Math.max(1, Math.min(devicePixelRatio, 2));
+  let ratio = software ? 0.75 : sharp;
   renderer.setPixelRatio(ratio);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -54,16 +56,22 @@ if (renderer) {
     pivot.add(o); loaded = true; start();
   });
 
-  // The canvas starts below the fixed header (its top and the hero's extra height come from --hdr, set here), so the
-  // headphones keep their size and position relative to the canvas but sit lower, clear of the header.
+  // The scene is framed on the hero below the fixed header (its height comes from --hdr, set here), so the headphones
+  // keep their size and position but sit clear of the header. Only the part of that frame where the headphones turn
+  // is drawn (camera view offset): the right ~70% on computers, the top ~55% on phones. That roughly halves the pixels
+  // per frame, which is what lets it stay sharp and smooth on modest laptops.
   const hero = canvas.parentElement;
-  let cw = 0, ch = 0;
+  let cw = 0, ch = 0, rx = 0, rw = 0, rh = 0;
   function resize() {
-    document.documentElement.style.setProperty('--hdr', header.offsetHeight + 'px');
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (w === cw && h === ch) return;
-    cw = w; ch = h;
-    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    const hdr = header.offsetHeight;
+    document.documentElement.style.setProperty('--hdr', hdr + 'px');
+    const W = hero.clientWidth, H = hero.clientHeight - hdr, m = innerWidth < 900;
+    const x = m ? 0 : Math.floor(W * 0.28), w = W - x, h = m ? Math.ceil(H * 0.55) : H;
+    if (W === cw && H === ch && w === rw && h === rh) return;
+    cw = W; ch = H; rx = x; rw = w; rh = h;
+    canvas.style.left = x + 'px'; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    renderer.setSize(w, h, false);
+    camera.aspect = W / H; camera.setViewOffset(W, H, x, 0, w, h); camera.updateProjectionMatrix();
   }
   new ResizeObserver(resize).observe(hero); resize();
 
@@ -72,9 +80,9 @@ if (renderer) {
   addEventListener('pointermove', (e) => { if (dragging) { drag += (e.clientX - lastX) * 0.01; lastX = e.clientX; } }, { passive: true });
   addEventListener('pointerup', () => { dragging = false; });
 
-  // Render only while the hero is on screen (no per-frame layout reads). Each second, if frames averaged slower than
-  // ~40 a second, drop the resolution a step (down to half), so weak graphics stay smooth instead of freezing.
-  let visible = true, running = false, last = 0, born = 0, spin = -0.6, win = 0, frames = 0;
+  // Render only while the hero is on screen (no per-frame layout reads). If a second averages under ~40 frames, first
+  // come down from 2x towards 1x (still sharp), then draw every other frame (30 a second) instead of losing sharpness.
+  let visible = true, running = false, last = 0, born = 0, spin = -0.6, win = 0, frames = 0, half = false, odd = false;
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; start(); }).observe(hero);
   function start() { if (!running && visible && loaded) { running = true; last = performance.now(); if (!born) born = last; requestAnimationFrame(frame); } }
   function frame(now) {
@@ -82,7 +90,11 @@ if (renderer) {
     const dt = Math.min((now - last) / 1000, 0.1); last = now;
     win += dt; frames++;
     if (win >= 1) {
-      if (frames / win < 40 && ratio > 0.5) { ratio = Math.max(0.5, ratio - 0.25); renderer.setPixelRatio(ratio); renderer.setSize(cw, ch, false); }
+      const fps = frames / win * (half ? 2 : 1);
+      if (fps < 40) {
+        if (ratio > 1) { ratio = Math.max(1, ratio - 0.25); renderer.setPixelRatio(ratio); renderer.setSize(rw, rh, false); }
+        else if (!half) half = true;
+      }
       win = 0; frames = 0;
     }
     // frame from what the camera sees: right of centre and large on computers, top half on phones
@@ -93,9 +105,11 @@ if (renderer) {
     pivot.position.set(m ? 0 : visW * 0.16, m ? visH * 0.27 : -visH * 0.02, 0);
     // on page load a quick turn that settles into the slow spin, so the 3D is obvious straight away
     const intro = Math.max(0, 1 - (now - born) / 2200);
-    spin += (reduce ? 0 : 0.32 + 4.5 * intro * intro) * dt;
+    // the owner wants the headphones turning for everyone, so this ignores the "reduce motion" setting (slow spin only)
+    spin += (0.32 + (reduce ? 0 : 4.5 * intro * intro)) * dt;
     pivot.rotation.set(0.12, spin + drag, 0);
-    renderer.render(scene, camera);
+    odd = !odd;
+    if (!half || odd) renderer.render(scene, camera);
     requestAnimationFrame(frame);
   }
 }
