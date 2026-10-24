@@ -35,10 +35,10 @@ def write(rel, content, pngs=()):
 
 
 def lockup(disc, fg, c1, c2, c3, margin=0.06):
-    """Disc + MELLOW | SOUND 256. fg None = headset cut out of the disc (hole)."""
+    """Disc + MELLOW | SOUNDS 256. fg None = headset cut out of the disc (hole)."""
     cap = 0.30 * D
     mellow_d, mellow_w = b.text_path("MELLOW", "Bold", cap)
-    sound_d, sound_w = b.text_path("SOUND", "Light", cap)
+    sound_d, sound_w = b.text_path("SOUNDS", "Light", cap)
     n_d, n_w = b.text_path("256", "Bold", cap)
     gap, pad, bar_w, bar_h = 0.19 * D, 0.058 * cap, 0.030 * cap, 1.46 * cap
     base = CY + cap / 2
@@ -98,7 +98,7 @@ def main():
     if os.path.isdir(KIT):
         shutil.rmtree(KIT)
 
-    # 1. Full logo (disc + MELLOW | SOUND 256) in colour
+    # 1. Full logo (disc + MELLOW | SOUNDS 256) in colour
     for name, args in {
         "full-logo_colour_for-light-backgrounds": (CRIMSON, WHITE, NAVY, NAVY, CRIMSON),
         "full-logo_colour_for-dark-backgrounds": (CRIMSON, WHITE, WHITE, WHITE, CRIMSON),

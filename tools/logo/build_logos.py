@@ -8,7 +8,7 @@ Build rules (same construction as the Zyntel logo library):
   - The mark is a disc with the headset in it. The headset is geometry.py (one fixed outline).
   - Colourless / white / ink logos are ALWAYS the disc, with the headset knocked out ("hole"),
     never a bare headset. Coloured marks come in disc and bare-headset forms.
-  - Wordmark: Montserrat ExtraBold "MELLOW", thin divider, Montserrat Light "SOUND", Bold "256" and Bold "256", outlined to paths
+  - Wordmark: Montserrat ExtraBold "MELLOW", thin divider, Montserrat Light "SOUNDS", Bold "256" and Bold "256", outlined to paths
     so no SVG needs the font installed.
 """
 import json
@@ -102,7 +102,7 @@ HEADSETS = {"crimson": CRIMSON, "navy": NAVY, "white": WHITE, "ink": INK}
 
 # ---- lockups ---------------------------------------------------------------------------------------
 LOCKUPS = {
-    # id: (disc, headset, MELLOW colour, SOUND colour, 256 colour, for)
+    # id: (disc, headset, MELLOW colour, SOUNDS colour, 256 colour, for)
     "crimson_disk_ink": (CRIMSON, WHITE, NAVY, NAVY, CRIMSON, "light pages"),
     "crimson_disk_white": (CRIMSON, WHITE, WHITE, WHITE, CRIMSON, "dark / navy pages"),
     "navy_disk_ink": (NAVY, CRIMSON, NAVY, NAVY, CRIMSON, "light pages, original colours"),
@@ -113,7 +113,7 @@ LOCKUPS = {
 def lockup_parts(disc, fg, c1, c2, c3=None):
     cap = 0.30 * D
     mellow_d, mellow_w = text_path("MELLOW", "Bold", cap)
-    sound_d, sound_w = text_path("SOUND", "Light", cap)
+    sound_d, sound_w = text_path("SOUNDS", "Light", cap)
     gap, pad, bar_w, bar_h = 0.19 * D, 0.058 * cap, 0.030 * cap, 1.46 * cap
     x = D + gap
     base = CY + cap / 2
@@ -124,7 +124,7 @@ def lockup_parts(disc, fg, c1, c2, c3=None):
     x += bar_w + pad * 3.4
     parts.append(f'<path fill="{c2}" transform="translate({x:.1f} {base:.1f})" d="{sound_d}"/>')
     x += sound_w
-    if c3:  # "256": Uganda's dial code, set bold after SOUND
+    if c3:  # "256": Uganda's dial code, set bold after SOUNDS
         n_d, n_w = text_path("256", "Bold", cap)
         x += pad * 8
         parts.append(f'<path fill="{c3}" transform="translate({x:.1f} {base:.1f})" d="{n_d}"/>')
@@ -150,7 +150,7 @@ def profile_svg(bg, disc, fg, hole, scale=0.88):
 def banner_svg(w, h, lockup_h_frac, tagline=True):
     """Navy banner, white lockup centred, optional tagline. Coordinates in banner pixels."""
     body, total = lockup_parts(CRIMSON, WHITE, WHITE, WHITE, CRIMSON)
-    k = (h * lockup_h_frac) / D
+    k = min((h * lockup_h_frac) / D, 0.82 * w / total)   # never wider than 82% of the banner
     lw = total * k
     tx, ty = (w - lw) / 2, (h - D * k) / 2 - (0.07 * h if tagline else 0)
     out = [f'<rect width="{w}" height="{h}" fill="{NAVY}"/>',
