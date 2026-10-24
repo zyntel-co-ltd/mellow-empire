@@ -3,7 +3,7 @@
 (function () {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const WHATSAPP = '256776156627';
-  const EMAIL = 'mellowsounds256@gmail.com';
+  const EMAIL = 'dariusbuwembo@mellowempire.com';
 
   // ---- words: headings rise in word by word ---------------------------------------------------------
   for (const el of document.querySelectorAll('.split')) {

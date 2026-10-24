@@ -3,7 +3,7 @@
 // Secret: RESEND_API_KEY (set with `npx wrangler secret put RESEND_API_KEY`, never in this repo).
 // Sender: mellowempire.com (added to Resend; verified once its DNS records are in Cloudflare). Until Resend accepts
 // that domain, the send is retried from zyntel.net (already verified), so no quote is lost either way.
-const TO = 'mellowsounds256@gmail.com';
+const TO = 'dariusbuwembo@mellowempire.com';
 const FROM = 'Mellow Empire website <website@mellowempire.com>';
 const FALLBACK_FROM = 'Mellow Empire website <website@zyntel.net>';
 
