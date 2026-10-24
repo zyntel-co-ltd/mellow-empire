@@ -28,10 +28,10 @@ p{line-height:1.6;color:var(--muted);margin:0 0 1rem;font-size:1rem}
 .socials{display:flex;gap:1.1rem;font-size:1.3rem}.socials a:hover{color:var(--crimson)}
 
 /* hero: copy behind the turning 3D headphones */
-.hero{position:relative;min-height:92vh;display:flex;align-items:center;padding:96px clamp(16px,6vw,96px) 40px;overflow:hidden}
+.hero{position:relative;min-height:calc(92vh + var(--hdr,65px));display:flex;align-items:center;padding:96px clamp(16px,6vw,96px) 40px;overflow:hidden}
 .hero .copy{position:relative;z-index:0;max-width:min(620px,50vw)}
 .hero .copy p{max-width:460px}
-#gl{position:absolute;left:0;right:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none}
+#gl{position:absolute;left:0;right:0;top:var(--hdr,65px);bottom:0;width:100%;height:calc(100% - var(--hdr,65px));z-index:1;pointer-events:none}
 
 /* blocks */
 .block{padding:clamp(48px,8vh,96px) clamp(16px,6vw,96px)}
@@ -128,7 +128,7 @@ footer{padding:26px clamp(16px,6vw,96px) 90px;font-size:.82rem;color:var(--muted
   header nav a:not(.btn){display:none}
   header nav .btn{padding:.55rem .95rem;font-size:.74rem;white-space:nowrap}
   header img{height:30px}
-  .hero{align-items:flex-end;padding-top:40vh;min-height:auto;padding-bottom:48px}
+  .hero{align-items:flex-end;padding-top:calc(40vh + var(--hdr,55px));min-height:auto;padding-bottom:48px}
   .hero .copy{max-width:none}
   h1{font-size:clamp(2.3rem,10.5vw,3.3rem)}
   .paths,.divisions,.steps{grid-template-columns:1fr}
@@ -166,3 +166,6 @@ footer .credit{flex-basis:100%;font-size:.68rem;opacity:.55}
 html,body{overflow-x:clip}
 .feature{overflow:hidden}
 @media (max-width:900px){.feature .shot,.feature.flip .shot{transform:none}}
+/* quote form: send status and the spam trap (hidden from people, filled only by bots) */
+.quote .status{margin:.6rem 0 0;font-weight:600;color:var(--navy)}.quote .status.bad{color:var(--crimson)}
+.quote .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
