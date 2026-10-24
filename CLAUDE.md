@@ -1,5 +1,7 @@
 # Claude Code Rules
 
+**Zyntel workspace rules apply here** (a Plane work item for every change, never print secrets, record what you learn): @.claude/zyntel-workspace-rules.md
+
 > These rules apply to every session in this project.
 
 ## Secrets and Credentials
