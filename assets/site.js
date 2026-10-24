@@ -53,7 +53,7 @@ if (renderer) {
     o.scale.multiplyScalar(1 / Math.max(s.x, s.y, s.z)); o.updateMatrixWorld(true);
     b = new THREE.Box3().setFromObject(o); o.position.sub(b.getCenter(new THREE.Vector3()));
     o.traverse((m) => { if (m.isMesh) for (const mat of [].concat(m.material)) if (mat && 'envMapIntensity' in mat) mat.envMapIntensity = 1.2; });
-    pivot.add(o); loaded = true; start();
+    pivot.add(o); loaded = true; start(); requestAnimationFrame(() => canvas.classList.add('on'));
   });
 
   // The scene is framed on the hero below the fixed header (its height comes from --hdr, set here), so the headphones

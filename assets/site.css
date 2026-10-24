@@ -114,6 +114,8 @@ legend{font-size:.82rem;font-weight:700;margin-bottom:8px;padding:0}
 .split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
 .split .w>span{display:inline-block;transform:translateY(110%);transition:transform .75s cubic-bezier(.2,.75,.2,1)}
 .split.in .w>span{transform:none}
+.js .split:not(.ready){visibility:hidden}
+#gl{opacity:0;transition:opacity .5s ease}#gl.on{opacity:1}
 .rise{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
 .rise.in{opacity:1;transform:none}
 

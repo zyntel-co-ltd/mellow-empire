@@ -6,6 +6,7 @@
   const EMAIL = 'sales@mellowempire.com';
 
   // ---- words: headings rise in word by word ---------------------------------------------------------
+  function splitWords() {
   for (const el of document.querySelectorAll('.split')) {
     const words = [];
     (function walk(node) {
@@ -24,7 +25,13 @@
       }
     })(el);
     words.forEach((w, i) => { w.style.transitionDelay = `${i * 60}ms`; });
+    el.classList.add('ready');
   }
+  }
+  // Split after the web font has arrived (or 900ms), so the headline never shows in the fallback font, jumps, then animates.
+  // Until then the CSS keeps it hidden (html.js .split:not(.ready)), so there is no flash of plain text.
+  const fontsReady = document.fonts && document.fonts.load ? Promise.race([document.fonts.load('800 1em Montserrat').catch(() => {}), new Promise((r) => setTimeout(r, 900))]) : Promise.resolve();
+  fontsReady.then(() => { splitWords(); requestAnimationFrame(onScroll); });
 
   // ---- reveal on scroll (rect checks, so it also works where observers are throttled) ----------------
   let pending = [...document.querySelectorAll('.split, .rise, .shot')];
@@ -41,7 +48,6 @@
   }
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
-  requestAnimationFrame(onScroll);
 
   // ---- quote store ------------------------------------------------------------------------------------
   const KEY = 'mellow-quote';
