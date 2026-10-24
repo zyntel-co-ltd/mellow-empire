@@ -5,7 +5,7 @@
 **Status:** Live
 **Production URL:** https://mellowempire.com (Cloudflare Workers static assets; every push to `main` deploys)
 **Repo:** github.com/zyntel-co-ltd/mellow-empire
-**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-86 (waiting on owner)
+**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-88 (real scale, scroll with the page, navy), ENG-86 (waiting on owner)
 
 ---
 
@@ -13,18 +13,20 @@
 
 The website of **Mellow Empire**, a Kampala business-solutions company (event production, AV, church technology, corporate training, creative). Mellow Empire is the parent brand. **Mellow Sounds 256** (DJing and sound-system hire, social handle `mellowsounds256`) is the live child brand. Event production and a school of music are planned divisions with no names yet.
 
-## How the homepage works (ENG-87, 2026-10-24)
+## How the homepage works (ENG-88, 2026-10-24)
 
 | Part | What it does |
 |---|---|
-| Hero | Red Beats headphones (real 3D model) turn a full circle so every side is seen; the headline sits **behind** them and stays readable |
-| Sections | One real product per section, shown like a studio product shot: grounded on a soft shadow, turning slowly (visitors can drag to turn it), cross-fading to the next product. DJ decks, speakers, SM58, moving-head light, mixer, monitor + mic stand |
-| Copy | Plain marketing copy: what is provided, for which events, how to book. No invented claims |
-| Colour | White page everywhere; brand colours only on a highlighted word and the section label |
+| Hero | Red Beats headphones fill most of the hero (88% of the screen height on a computer) and turn slowly; the headline sits **behind** them |
+| Sections | One real product per section, **at real proportions**: one scale (pixels per metre) for every product, set so the Sony MDR-7506 headphones resting on the DJ decks are 55% of the screen height (12% on phones). Big items (decks, speaker, monitor) run past the edges on purpose |
+| Motion | Products move with the page: each comes up from below with its section, turns slowly while in view (drag to turn), and leaves upwards. No fades, no flying in |
+| Sizing | `site.js` sets each product section's height from its product, so neighbours never overlap and there is no empty space between them |
+| Colour | Navy is the text and button colour; crimson and the section accent mark one word and the label. White page |
+| No repeats | Each model appears once: Beats (hero), decks + Sony (DJs), speaker, SM58, moving head, mixer, monitor |
 
-Files: `index.html`, `assets/site.css`, `assets/site.js` (Three.js 0.160 via import map), `assets/models/*.glb`. The products per section are `SHOTS` in `site.js`; `TILT` leans flat products (decks, mixer) toward the viewer. Bump the `?v=` on the CSS/JS links in all pages when they change.
+Files: `index.html`, `assets/site.css`, `assets/site.js` (Three.js 0.160, orthographic camera in CSS pixels), `assets/models/*.glb`. Real sizes per product: `PRODUCTS` in `site.js`. Bump `?v=` on the CSS/JS links in all pages after a change.
 
-Normal: on load the headphones appear on the right (top on phones) and turn; scrolling swaps the product with a short fade. Broken: an empty right side (a model failed to load: check the browser console and `assets/models/`), or a product cut off at the edge (framing in `frame()`).
+Normal: each product scrolls in step with its text. Broken: a blank gap where a product should be (model failed to load: console, `assets/models/`), or two products overlapping (section height in `layout()`).
 
 ## Other pages
 
@@ -52,6 +54,8 @@ Push to `main` and Cloudflare builds automatically (`npx wrangler deploy`, asset
 - A clean white page like the reference video. No full-colour backgrounds and no giant watermark words.
 - No assembling stage, no flying-in pieces, no disco lights (owner, 2026-10-24: looked unreal). One real product per section instead.
 - Copy must read like a real marketer wrote it: concrete, plain, no hype.
+- Real proportions between products, no repeated images, no fades: products travel with the page (owner, 2026-10-24).
+- Navy must be visible: it is the text and button colour.
 - The traced version of the owner's headset beat the geometric redraws. Keep its organic ear-cups.
 - Credits go on their own page, never in the content.
 

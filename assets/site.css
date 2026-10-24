@@ -1,5 +1,5 @@
-:root{--crimson:#EB1B57;--navy:#0A1550;--gold:#C98F1E;--ivory:#F6F1E7;--ink:#0A0A14;
-  --bg:#FBFAF7;--fg:#0A0A14;--muted:rgba(10,10,20,.66);--card:#fff;--line:rgba(10,10,20,.12);--accent:#EB1B57;--tint:rgba(235,27,87,.07)}
+:root{--crimson:#EB1B57;--navy:#0A1550;--gold:#C98F1E;--ivory:#F6F1E7;--ink:#0A1550;
+  --bg:#FBFAF7;--fg:#0A1550;--muted:rgba(10,21,80,.72);--card:#fff;--line:rgba(10,21,80,.14);--accent:#EB1B57;--tint:rgba(235,27,87,.07)}
 body[data-world=crimson]{--accent:#EB1B57;--tint:rgba(235,27,87,.08)}
 body[data-world=gold]{--accent:#C98F1E;--tint:rgba(226,176,74,.16)}
 body[data-world=ivory]{--accent:#0A1550;--tint:rgba(10,21,80,.06)}
@@ -70,3 +70,14 @@ main>section.hero{z-index:0}
 
 footer{background:var(--bg)}
 @media (max-width:900px){section.hero{padding-top:47vh}.hero h1{font-size:clamp(2.4rem,11vw,3.4rem)}section,section.tall{padding-top:52vh}}
+/* v3 (ENG-88): products move with the page; sections are as tall as their product (set by site.js);
+   copy stays in view while a tall product passes; navy is the text and button colour */
+section.tall{min-height:75vh;align-items:flex-start}
+section.hero{min-height:100vh}
+main>section:not(.hero) .copy{position:sticky;top:14vh}
+section{padding-top:72px;padding-bottom:48px}
+@media (max-width:900px){
+  section,section.tall{padding-top:72px;padding-bottom:36px;min-height:auto}
+  section.hero{padding-top:47vh}
+  main>section:not(.hero) .copy{position:static}
+}
