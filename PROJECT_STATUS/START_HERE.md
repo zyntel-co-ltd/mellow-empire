@@ -32,6 +32,8 @@ The quote is kept in the browser (`localStorage` key `mellow-quote`), so items a
 
 Normal: the badge in the header shows the item count; "Send on WhatsApp" opens WhatsApp with the event details and the equipment list. Broken: the badge never changes (check the console and `ui.js`), or the message is empty (check the form field names: type, date, venue, guests, services, notes, name, phone).
 
+Licences: photos are from Unsplash (free for commercial use, no credit required). The hero headphones are "Audifonos Beats Mixr" by HectorValenzuela on Sketchfab, **CC BY 4.0**: the licence requires the one-line credit in the home page footer, so keep it while the model is used. There is no credits page. A credit-free alternative was tested: Pioneer HDJ-X5 (Sketchfab Free Standard), kept on the dev machine under `tmp-mellow/sf/dl/pioneer-hdj-x5/`.
+
 **Owner to confirm:** that 0776 156 627 is on WhatsApp, and that the equipment list on `/hire/` matches what Mellow actually hires out.
 
 ## Other pages
