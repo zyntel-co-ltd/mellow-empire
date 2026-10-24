@@ -170,6 +170,20 @@
     document.addEventListener('click', (e) => { if (credits.open && !credits.contains(e.target)) credits.open = false; });
   }
 
+  // ---- back to top: appears after the first screen, glides up (instant under reduced motion) ------------
+  const top = document.createElement('button');
+  top.type = 'button'; top.className = 'to-top'; top.setAttribute('aria-label', 'Back to top'); top.hidden = true;
+  top.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  top.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
+  document.body.append(top);
+  let topShown = false;
+  addEventListener('scroll', () => {
+    const show = scrollY > innerHeight * 0.8;
+    if (show === topShown) return;
+    topShown = show; top.hidden = false;
+    setTimeout(() => top.classList.toggle('on', show), 20);
+  }, { passive: true });
+
   addEventListener('storage', (e) => { if (e.key === KEY) { memo = read(); render(); } });
   render();
 })();
