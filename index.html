@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="/assets/site.css?v=20261024w">
+<link rel="stylesheet" href="/assets/site.css?v=20261024z">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body data-world="navy">
@@ -25,7 +25,7 @@
 <header>
   <a href="/" aria-label="Mellow Empire home"><img src="/images/logo/mellow-sounds/nav_crimson_disk_ink_64h.png" alt="Mellow Sound 256" height="40"></a>
   <nav>
-    <a href="/hire/">Hire equipment</a><a href="#events">Events</a><a href="#divisions">Divisions</a><a href="/about/">About</a>
+    <a href="/hire/">Hire equipment</a><a href="#services">Services</a><a href="#events">Events</a><a href="/about/">About</a>
     <a class="btn" href="#quote">Your quote <span data-quote-count></span></a>
   </nav>
 </header>
@@ -41,83 +41,106 @@
     <canvas id="gl" aria-hidden="true"></canvas>
   </section>
 
-  <!-- three ways in, so visitors act instead of reading -->
-  <section class="block" data-world="navy">
-    <div class="head"><p class="eyebrow">Start here</p><h2 class="split">What do you <em>need</em>?</h2></div>
-    <div class="paths">
-      <a class="path rise" href="/hire/">
-        <figure class="shot"><img src="/assets/photos/desk-800.jpg" srcset="/assets/photos/desk-800.jpg 800w, /assets/photos/desk-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 30vw" alt="A digital mixing desk lit in blue" loading="lazy"></figure>
-        <h3>Hire equipment</h3><p>Speakers, microphones, mixers, DJ decks, lighting, truss and screens. Pick what you need and add it to your quote.</p><span class="go">Browse equipment →</span>
-      </a>
-      <a class="path rise" href="#quote" data-prefill="|DJ,Sound system">
-        <figure class="shot"><img src="/assets/photos/dj-800.jpg" srcset="/assets/photos/dj-800.jpg 800w, /assets/photos/dj-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 30vw" alt="A DJ's hands on a turntable and mixer" loading="lazy"></figure>
-        <h3>Book a DJ</h3><p>A DJ with the sound system for your event. Tell us the crowd and the mood and we plan the music with you.</p><span class="go">Start a DJ quote →</span>
-      </a>
-      <a class="path rise" href="#quote" data-prefill="|Sound system,Microphones,Lighting,Stage and truss,Setup crew">
-        <figure class="shot"><img src="/assets/photos/production-800.jpg" srcset="/assets/photos/production-800.jpg 800w, /assets/photos/production-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 30vw" alt="A stage with an LED wall, beam lights and truss" loading="lazy"></figure>
-        <h3>Set up the whole event</h3><p>Sound, lighting, staging and crew, planned with you and run on the day, so you only have one person to call.</p><span class="go">Plan a full setup →</span>
-      </a>
+  <div id="services"></div>
+  <section class="feature" data-world="crimson">
+    <figure class="shot"><img src="/assets/photos/desk-1600.jpg" srcset="/assets/photos/desk-800.jpg 800w, /assets/photos/desk-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="A digital mixing desk lit in blue" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Equipment hire</p>
+      <h2 class="split">Hire the gear, we <em>deliver</em> it.</h2>
+      <p class="rise">Speakers, mixing desks, DJ decks, microphones, lighting, truss and screens. Pick what you need, add it to your quote, and our crew can deliver, set up and collect it.</p>
+      <div class="chips rise"><a href="/hire/#sound">Speakers</a><a href="/hire/#mixing">Mixing desks</a><a href="/hire/#dj">DJ decks</a><a href="/hire/#microphones">Microphones</a><a href="/hire/#lighting">Lighting</a><a href="/hire/#staging">Truss and stages</a><a href="/hire/#screens">Screens</a></div>
+      <div class="actions rise"><a class="btn" href="/hire/">Browse equipment</a><a class="btn ghost" href="#quote">Build a quote</a></div>
     </div>
   </section>
-
-  <!-- the empire: divisions as colour worlds -->
-  <section id="divisions" class="block tint" data-world="crimson">
-    <div class="head"><p class="eyebrow">The empire</p><h2 class="split">One company, three <em>divisions</em>.</h2><p class="rise">Mellow Empire is the parent company. Each division has its own job and its own colour.</p></div>
-    <div class="divisions">
-      <article class="division live rise" style="--d:#EB1B57">
-        <span class="tag">Live now</span>
-        <h3>Mellow Sounds 256</h3>
-        <p>DJs and sound-system hire for events across Uganda. Where Mellow started.</p>
-        <div class="actions"><a class="btn" href="#quote" data-prefill="|DJ,Sound system">Book</a><a class="btn ghost" href="/hire/">Hire</a></div>
-      </article>
-      <article class="division rise" style="--d:#3F4FD6">
-        <span class="tag">Coming soon</span>
-        <h3>Event production</h3>
-        <p>Full production: staging, truss, lighting design, LED screens and event management for large events.</p>
-        <div class="actions"><a class="btn ghost" href="#quote" data-prefill="|Stage and truss,Lighting,LED screen">Ask about production</a></div>
-      </article>
-      <article class="division rise" style="--d:#C98F1E">
-        <span class="tag">Coming soon</span>
-        <h3>School of music</h3>
-        <p>Training for DJs, producers and live-sound engineers. Ask to be told when the first intake opens.</p>
-        <div class="actions"><a class="btn ghost" href="mailto:enquiries@mellowempire.com?subject=School%20of%20music%20interest">Tell me when it opens</a></div>
-      </article>
+  <section class="feature flip" data-world="crimson">
+    <figure class="shot"><img src="/assets/photos/dj-1600.jpg" srcset="/assets/photos/dj-800.jpg 800w, /assets/photos/dj-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="A DJ's hands on a turntable and mixer" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Mellow Sounds 256 · DJs</p>
+      <h2 class="split">A DJ who plays for <em>your</em> crowd.</h2>
+      <p class="rise">Weddings, birthdays, graduations, company dinners and club nights. Tell us who is coming and what they like, and we plan the music with you before the day.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="|DJ,Sound system">Book a DJ</a></div>
     </div>
   </section>
-
-  <!-- what we set up: equipment groups, each opens the hire page at that group -->
-  <section class="block" data-world="navy">
-    <div class="head"><p class="eyebrow">What we set up</p><h2 class="split">From one microphone to a full <em>stage</em>.</h2></div>
-    <div class="tiles">
-      <a class="tile rise" href="/hire/#sound"><figure class="shot"><img src="/assets/photos/sound-800.jpg" alt="An outdoor stage on truss with speakers, in front of a crowd" loading="lazy"></figure><span>Sound systems</span></a>
-      <a class="tile rise" href="/hire/#mixing"><figure class="shot"><img src="/assets/photos/desk-close-800.jpg" alt="Faders and buttons on a mixing desk" loading="lazy"></figure><span>Mixing</span></a>
-      <a class="tile rise" href="/hire/#microphones"><figure class="shot"><img src="/assets/photos/mic-stand-800.jpg" alt="A microphone on a stand on a blue-lit stage" loading="lazy"></figure><span>Microphones</span></a>
-      <a class="tile rise" href="/hire/#lighting"><figure class="shot"><img src="/assets/photos/rig-800.jpg" alt="Stage lights hanging from a truss" loading="lazy"></figure><span>Lighting</span></a>
-      <a class="tile rise" href="/hire/#effects"><figure class="shot"><img src="/assets/photos/moving-head-800.jpg" alt="A moving-head light on a stage" loading="lazy"></figure><span>Moving lights</span></a>
-      <a class="tile rise" href="/hire/#staging"><figure class="shot"><img src="/assets/photos/cases-800.jpg" alt="Flight cases and equipment backstage" loading="lazy"></figure><span>Staging and crew</span></a>
+  <section class="feature" data-world="navy">
+    <figure class="shot"><img src="/assets/photos/sound-1600.jpg" srcset="/assets/photos/sound-800.jpg 800w, /assets/photos/sound-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="An outdoor stage on truss with speakers, in front of a big crowd" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Mellow Sounds 256 · Sound systems</p>
+      <h2 class="split">The right speakers for the <em>room</em>.</h2>
+      <p class="rise">A garden reception and an outdoor concert need different equipment. We look at your venue and guest numbers, then bring speakers everyone can hear clearly, without it being too loud to talk.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="|Sound system">Quote for sound</a></div>
     </div>
   </section>
-
-  <!-- sectors: each one opens the quote with the event type filled in -->
-  <section id="events" class="block tint" data-world="gold">
-    <div class="head"><p class="eyebrow">Events we do</p><h2 class="split">Pick your event, get a <em>quote</em>.</h2></div>
-    <div class="sectors">
-      <article class="sector rise">
-        <figure class="shot"><img src="/assets/photos/tent-800.jpg" alt="An outdoor reception set up under a draped canopy" loading="lazy"></figure>
-        <div><h3>Weddings and introductions</h3><p>Microphones for the MC and speeches, music for the entrance and the cake, a DJ for the dance floor.</p><a class="btn ghost" href="#quote" data-prefill="Wedding or introduction|DJ,Sound system,Microphones">Quote for a wedding</a></div>
-      </article>
-      <article class="sector rise">
-        <figure class="shot"><img src="/assets/photos/church-800.jpg" alt="A choir on stage seen from behind the sound desk" loading="lazy"></figure>
-        <div><h3>Churches</h3><p>Sound systems installed and looked after, services streamed online, and your media team trained to run it.</p><a class="btn ghost" href="#quote" data-prefill="Church|Sound system,Microphones">Quote for a church</a></div>
-      </article>
-      <article class="sector rise">
-        <figure class="shot"><img src="/assets/photos/venue-lights-800.jpg" alt="An empty hall set up with stage lighting" loading="lazy"></figure>
-        <div><h3>Conferences and launches</h3><p>Microphones for speakers and panels, clear sound for the room, lighting and screens for the stage.</p><a class="btn ghost" href="#quote" data-prefill="Conference or launch|Microphones,Sound system,LED screen">Quote for a conference</a></div>
-      </article>
-      <article class="sector rise">
-        <figure class="shot"><img src="/assets/photos/mic-beams-800.jpg" alt="A microphone stand in front of stage beam lights" loading="lazy"></figure>
-        <div><h3>Concerts and parties</h3><p>Speakers sized for the crowd, a stage, lighting and a DJ or a live band setup.</p><a class="btn ghost" href="#quote" data-prefill="Concert or party|Sound system,Lighting,Stage and truss,DJ">Quote for a concert</a></div>
-      </article>
+  <section class="feature flip" data-world="peri">
+    <figure class="shot"><img src="/assets/photos/rig-1600.jpg" srcset="/assets/photos/rig-800.jpg 800w, /assets/photos/rig-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="Stage lights hanging from a truss" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Lighting</p>
+      <h2 class="split">Light that suits the <em>moment</em>.</h2>
+      <p class="rise">Soft lighting while people eat and talk, then moving lights over the dance floor when the music picks up.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="|Lighting">Quote for lighting</a></div>
+    </div>
+  </section>
+  <section class="feature" data-world="gold">
+    <figure class="shot"><img src="/assets/photos/mic-stand-1600.jpg" srcset="/assets/photos/mic-stand-800.jpg 800w, /assets/photos/mic-stand-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="A microphone on a stand on a blue-lit stage" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Microphones</p>
+      <h2 class="split">Every speech <em>heard</em>.</h2>
+      <p class="rise">Wired and wireless microphones for the MC, speeches, panels and live bands, checked before the programme starts so nobody is tapping a dead mic.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="|Microphones">Quote for microphones</a></div>
+    </div>
+  </section>
+  <section class="feature flip" data-world="peri">
+    <figure class="shot"><img src="/assets/photos/moving-head-1600.jpg" srcset="/assets/photos/moving-head-800.jpg 800w, /assets/photos/moving-head-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="A moving-head light on a stage" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Mellow Empire · Event production</p>
+      <h2 class="split">The whole event, <em>produced</em>.</h2>
+      <p class="rise">Staging, truss, lighting design, LED screens and event management for large events, planned with you and run on the day, with one person to call.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="|Sound system,Lighting,Stage and truss,LED screen,Setup crew">Plan a full setup</a></div>
+    </div>
+  </section>
+  <section class="feature" data-world="gold">
+    <figure class="shot"><img src="/assets/photos/desk-close-1600.jpg" srcset="/assets/photos/desk-close-800.jpg 800w, /assets/photos/desk-close-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="Faders and buttons on a mixing desk" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Mellow Empire · School of music</p>
+      <h2 class="split">Learn to DJ, produce and mix <em>live</em>.</h2>
+      <p class="rise">Courses for DJs, music producers and live-sound engineers, taught by the people who run our events.</p>
+      <div class="actions rise"><a class="btn" href="mailto:enquiries@mellowempire.com?subject=School%20of%20music%20courses">Ask about courses</a></div>
+    </div>
+  </section>
+  <div id="events"></div>
+  <section class="feature flip" data-world="gold">
+    <figure class="shot"><img src="/assets/photos/tent-1600.jpg" srcset="/assets/photos/tent-800.jpg 800w, /assets/photos/tent-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="An outdoor reception set up under a draped canopy" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Weddings and introductions</p>
+      <h2 class="split">From the speeches to the <em>last</em> dance.</h2>
+      <p class="rise">Microphones for the MC and speeches, music for the entrance and the cake, and a DJ who keeps the dance floor going until the end of the night.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="Wedding or introduction|DJ,Sound system,Microphones">Quote for a wedding</a></div>
+    </div>
+  </section>
+  <section class="feature" data-world="navy">
+    <figure class="shot"><img src="/assets/photos/church-1600.jpg" srcset="/assets/photos/church-800.jpg 800w, /assets/photos/church-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="A choir on stage, seen from behind the sound desk" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Churches</p>
+      <h2 class="split">Clear sound every <em>Sunday</em>.</h2>
+      <p class="rise">We install and look after church sound systems, stream services online, and train your media team to run everything themselves.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="Church|Sound system,Microphones">Quote for a church</a></div>
+    </div>
+  </section>
+  <section class="feature flip" data-world="peri">
+    <figure class="shot"><img src="/assets/photos/venue-lights-1600.jpg" srcset="/assets/photos/venue-lights-800.jpg 800w, /assets/photos/venue-lights-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="An empty hall set up with stage lighting" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Conferences and launches</p>
+      <h2 class="split">One team from setup to <em>pack-down</em>.</h2>
+      <p class="rise">Microphones for speakers and panels, clear sound for the room, lighting and screens for the stage, from the first plan to the last cable.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="Conference or launch|Microphones,Sound system,LED screen">Quote for a conference</a></div>
+    </div>
+  </section>
+  <section class="feature" data-world="crimson">
+    <figure class="shot"><img src="/assets/photos/mic-beams-1600.jpg" srcset="/assets/photos/mic-beams-800.jpg 800w, /assets/photos/mic-beams-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 62vw" alt="A microphone stand in front of stage beam lights" loading="lazy"></figure>
+    <div class="copy">
+      <p class="eyebrow">Concerts and parties</p>
+      <h2 class="split">Make the whole crowd <em>feel</em> it.</h2>
+      <p class="rise">Speakers sized for the crowd, a stage, lighting, and a DJ or a live band setup.</p>
+      <div class="actions rise"><a class="btn" href="#quote" data-prefill="Concert or party|Sound system,Lighting,Stage and truss,DJ">Quote for a concert</a></div>
     </div>
   </section>
 
@@ -178,7 +201,7 @@
   <small class="credit">Headphones 3D model: <a href="https://sketchfab.com/3d-models/de95fa8c2950462b87ff0a40ac208db7" rel="noopener">“Audifonos Beats Mixr”</a> by HectorValenzuela, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a></small>
 </footer>
 
-<script src="/assets/ui.js?v=20261024w" defer></script>
-<script type="module" src="/assets/site.js?v=20261024w"></script>
+<script src="/assets/ui.js?v=20261024z" defer></script>
+<script type="module" src="/assets/site.js?v=20261024z"></script>
 </body>
 </html>

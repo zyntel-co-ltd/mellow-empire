@@ -57,9 +57,9 @@ if (renderer) {
     const m = innerWidth < 900;
     // frame from what the camera sees: right of centre and large on computers, top half on phones
     const visH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z, visW = visH * camera.aspect;
-    const size = m ? Math.min(visH * 0.4, visW * 0.8) : Math.min(visH * 0.76, visW * 0.44);
+    const size = m ? Math.min(visH * 0.4, visW * 0.8) : Math.min(visH * 0.86, visW * 0.5);
     pivot.scale.setScalar(size);
-    pivot.position.set(m ? 0 : visW * 0.27, m ? visH * 0.27 : -visH * 0.02, 0);
+    pivot.position.set(m ? 0 : visW * 0.16, m ? visH * 0.27 : -visH * 0.02, 0);
     spin += (reduce ? 0 : 0.32) * dt;
     pivot.rotation.set(0.12, spin + drag, 0);
     if (hero.getBoundingClientRect().bottom > 0) renderer.render(scene, camera);

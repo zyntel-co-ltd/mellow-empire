@@ -5,7 +5,7 @@
 **Status:** Live
 **Production URL:** https://mellowempire.com (Cloudflare Workers static assets; every push to `main` deploys)
 **Repo:** github.com/zyntel-co-ltd/mellow-empire
-**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-88 (real scale, navy), ENG-89 (photos, 3D only in the hero, no credits page), ENG-90 (working site: divisions, hire catalogue, quote builder), ENG-86 (waiting on owner)
+**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-88 (real scale, navy), ENG-89 (photos, 3D only in the hero, no credits page), ENG-90 (working site: hire catalogue, quote builder), ENG-91 (big alternating photos, services instead of division badges), ENG-86 (waiting on owner)
 
 ---
 
@@ -20,10 +20,8 @@ It is a working site for **Mellow Empire**, not a brochure: visitors hire equipm
 | Page / part | What it does |
 |---|---|
 | Home hero | Red Beats Mixr headphones in 3D (the only 3D on the site, the owner's choice), headline behind them. Buttons: Build a quote, Browse equipment |
-| Start here | Three paths: Hire equipment (to `/hire/`), Book a DJ, Set up the whole event (both open the quote with services ticked) |
-| Divisions | Mellow Empire's divisions as colour worlds: Mellow Sounds 256 (crimson, live), Event production (blue, coming soon), School of music (gold, coming soon) |
-| What we set up | Six equipment groups with setup photos, each opening `/hire/` at that group |
-| Events we do | Weddings and introductions, churches, conferences, concerts: each button opens the quote with the event type and services filled in |
+| Services (ENG-91) | Big photos alternating left and right, bleeding to the page edge and fading into the page: Equipment hire (with category chips into `/hire/`), DJs and Sound systems (Mellow Sounds 256), Lighting, Microphones, Event production and School of music (Mellow Empire services, no "coming soon" badges). Each has a button that opens the quote with services ticked |
+| Events | Weddings and introductions, churches, conferences, concerts, in the same alternating layout; each button opens the quote with the event type and services filled in |
 | How it works | Three steps: tell us, we confirm, we set up and pack away |
 | Quote builder (`/#quote`) | Event, date, venue, guests, services, the equipment added on `/hire/`, notes, name, phone. **Send on WhatsApp** (opens wa.me/256776156627 with the message) or **Send by email** (enquiries@mellowempire.com). No server: the visitor's own WhatsApp or email app sends it |
 | `/hire/` | Equipment by category (sound, mixing, DJ, microphones, lighting, effects, staging and crew, screens) with Add and quantity buttons; a tray links to the quote. No prices: they are confirmed with the quote |

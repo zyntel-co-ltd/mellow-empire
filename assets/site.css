@@ -143,3 +143,26 @@ footer{padding:26px clamp(16px,6vw,96px) 90px;font-size:.82rem;color:var(--muted
   .shot,.shot img,.split .w>span,.rise{transition:none;transform:none;opacity:1;clip-path:none}
 }
 footer .credit{flex-basis:100%;font-size:.68rem;opacity:.55}
+/* v6 (ENG-91): big photos alternating left and right, bleeding to the page edge and fading into the page */
+.feature{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center;padding:clamp(28px,5vh,56px) clamp(16px,6vw,96px) clamp(28px,5vh,56px) 0;min-height:78vh}
+.feature.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);padding:clamp(28px,5vh,56px) 0 clamp(28px,5vh,56px) clamp(16px,6vw,96px)}
+.feature.flip .shot{order:2}
+.feature .shot{aspect-ratio:auto;height:min(72vh,640px);border-radius:0 28px 28px 0;background:none;
+  -webkit-mask-image:linear-gradient(to right,#000 70%,transparent 100%);mask-image:linear-gradient(to right,#000 70%,transparent 100%)}
+.feature.flip .shot{border-radius:28px 0 0 28px;-webkit-mask-image:linear-gradient(to left,#000 70%,transparent 100%);mask-image:linear-gradient(to left,#000 70%,transparent 100%)}
+.feature .shot{clip-path:none;opacity:.001;transform:translateX(-40px);transition:opacity .9s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.feature.flip .shot{transform:translateX(40px)}
+.feature .shot.in{opacity:1;transform:none}
+.feature .copy{max-width:500px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 1.2rem}
+.chips a{text-decoration:none;font-weight:600;font-size:.82rem;padding:.4rem .8rem;border-radius:999px;border:1.5px solid var(--line)}
+.chips a:hover{border-color:var(--crimson);color:var(--crimson)}
+@media (max-width:900px){
+  .feature,.feature.flip{grid-template-columns:1fr;padding:24px 0 32px;min-height:auto;gap:18px}
+  .feature.flip .shot{order:0}
+  .feature .shot,.feature.flip .shot{height:56vw;border-radius:0;-webkit-mask-image:linear-gradient(to bottom,#000 75%,transparent);mask-image:linear-gradient(to bottom,#000 75%,transparent)}
+  .feature .copy{padding:0 16px}
+}
+html,body{overflow-x:clip}
+.feature{overflow:hidden}
+@media (max-width:900px){.feature .shot,.feature.flip .shot{transform:none}}
