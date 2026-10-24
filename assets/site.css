@@ -177,3 +177,4 @@ html,body{overflow-x:clip}
 /* quote form: send status and the spam trap (hidden from people, filled only by bots) */
 .quote .status{margin:.6rem 0 0;font-weight:600;color:var(--navy)}.quote .status.bad{color:var(--crimson)}
 .quote .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+footer .powered{font-size:.74rem;opacity:.75}footer .powered a{color:inherit;font-weight:600;text-decoration:none}footer .powered a:hover{color:var(--crimson);opacity:1}
