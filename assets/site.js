@@ -3,58 +3,9 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-// Homepage behaviour (ENG-89):
-// 1. Hero: Pioneer HDJ-X5 DJ headphones in 3D, turning slowly (drag to turn), in front of the headline.
-//    Model: Sketchfab, Free Standard licence (no credit required).
-// 2. Words: headings split into words that rise in one after another when they come into view.
-// 3. Photos: open from a mask and settle as they come into view, with a light parallax while scrolling.
+// Home hero (ENG-90): Pioneer HDJ-X5 DJ headphones in 3D, turning slowly (drag to turn), in front of the
+// headline. Model: Sketchfab, Free Standard licence (no credit required). Reveals and the quote are in ui.js.
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const sections = [...document.querySelectorAll('section[data-world]')];
-
-// ---- words ----------------------------------------------------------------------------------------
-for (const el of document.querySelectorAll('.split')) {
-  const words = [];
-  const walk = (node) => {
-    for (const n of [...node.childNodes]) {
-      if (n.nodeType === 3) {
-        const frag = document.createDocumentFragment();
-        n.textContent.split(/(\s+)/).forEach((part) => {
-          if (!part) return;
-          if (/^\s+$/.test(part)) { frag.append(part); return; }
-          const w = document.createElement('span'); w.className = 'w';
-          const i = document.createElement('span'); i.textContent = part; w.append(i);
-          frag.append(w); words.push(i);
-        });
-        n.replaceWith(frag);
-      } else if (n.nodeType === 1) walk(n);
-    }
-  };
-  walk(el);
-  words.forEach((w, i) => { w.style.transitionDelay = `${i * 70}ms`; });
-}
-
-// ---- reveal on scroll (plain rect checks; works even where IntersectionObserver is throttled) -------
-let pending = [...document.querySelectorAll('.split, .rise, .shot')];
-const shots = [...document.querySelectorAll('.shot')];
-function onScroll() {
-  const h = innerHeight;
-  pending = pending.filter((el) => {
-    const r = el.getBoundingClientRect();
-    if (reduce || (r.top < h * 0.86 && r.bottom > 0)) { el.classList.add('in'); return false; }
-    return true;
-  });
-  if (!reduce) for (const s of shots) {
-    const r = s.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > h) continue;
-    const off = (r.top + r.height / 2 - h / 2) / h;         // -0.5 .. 0.5 while on screen
-    s.firstElementChild.style.translate = `0 ${(off * -6).toFixed(2)}%`;
-  }
-  const mid = sections.find((s) => { const r = s.getBoundingClientRect(); return r.top <= h / 2 && r.bottom > h / 2; });
-  if (mid && document.body.dataset.world !== mid.dataset.world) document.body.dataset.world = mid.dataset.world;
-}
-addEventListener('scroll', onScroll, { passive: true });
-addEventListener('resize', onScroll);
-requestAnimationFrame(onScroll);
 
 // ---- hero headphones --------------------------------------------------------------------------------
 const canvas = document.getElementById('gl');

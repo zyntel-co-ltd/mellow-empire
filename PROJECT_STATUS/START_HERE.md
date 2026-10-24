@@ -5,7 +5,7 @@
 **Status:** Live
 **Production URL:** https://mellowempire.com (Cloudflare Workers static assets; every push to `main` deploys)
 **Repo:** github.com/zyntel-co-ltd/mellow-empire
-**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-88 (real scale, navy), ENG-89 (photos, 3D only in the hero, animated words, no credits page), ENG-86 (waiting on owner)
+**Work items:** Plane ENG-85 (redesign), ENG-87 (product shots + copy), ENG-88 (real scale, navy), ENG-89 (photos, 3D only in the hero, no credits page), ENG-90 (working site: divisions, hire catalogue, quote builder), ENG-86 (waiting on owner)
 
 ---
 
@@ -13,20 +13,26 @@
 
 The website of **Mellow Empire**, a Kampala business-solutions company (event production, AV, church technology, corporate training, creative). Mellow Empire is the parent brand. **Mellow Sounds 256** (DJing and sound-system hire, social handle `mellowsounds256`) is the live child brand. Event production and a school of music are planned divisions with no names yet.
 
-## How the homepage works (ENG-89, 2026-10-24)
+## How the site works (ENG-90, 2026-10-24)
 
-| Part | What it does |
+It is a working site for **Mellow Empire**, not a brochure: visitors hire equipment, book a DJ or plan a full setup, and send a quote.
+
+| Page / part | What it does |
 |---|---|
-| Hero | Pioneer HDJ-X5 DJ headphones in 3D (the only 3D on the site), turning slowly, drag to turn; the headline sits behind them in the left half |
-| Services | Large photographs of African and Ugandan events (DJ, wedding dancing, outdoor concert on truss, singer, stage lighting, choir and sound desk, MC, traditional dancers, stage performers), each used once, alternating left and right; two are full-width banners with the copy on a card |
-| Motion | Headings rise in word by word; paragraphs and buttons fade up; photos open from a mask and settle, with a light parallax while scrolling |
-| Colour | Navy text and buttons; crimson or the section accent on one word and the label. White page |
+| Home hero | Pioneer HDJ-X5 DJ headphones in 3D (the only 3D on the site), headline behind them. Buttons: Build a quote, Browse equipment |
+| Start here | Three paths: Hire equipment (to `/hire/`), Book a DJ, Set up the whole event (both open the quote with services ticked) |
+| Divisions | Mellow Empire's divisions as colour worlds: Mellow Sounds 256 (crimson, live), Event production (blue, coming soon), School of music (gold, coming soon) |
+| What we set up | Six equipment groups with setup photos, each opening `/hire/` at that group |
+| Events we do | Weddings and introductions, churches, conferences, concerts: each button opens the quote with the event type and services filled in |
+| How it works | Three steps: tell us, we confirm, we set up and pack away |
+| Quote builder (`/#quote`) | Event, date, venue, guests, services, the equipment added on `/hire/`, notes, name, phone. **Send on WhatsApp** (opens wa.me/256776156627 with the message) or **Send by email** (enquiries@mellowempire.com). No server: the visitor's own WhatsApp or email app sends it |
+| `/hire/` | Equipment by category (sound, mixing, DJ, microphones, lighting, effects, staging and crew, screens) with Add and quantity buttons; a tray links to the quote. No prices: they are confirmed with the quote |
 
-Files: `index.html`, `assets/site.css`, `assets/site.js`, `assets/photos/<name>-1200.jpg` and `-2400.jpg` (served with `srcset`), `assets/models/pioneer-hdj-x5.glb`.
+The quote is kept in the browser (`localStorage` key `mellow-quote`), so items added on `/hire/` appear in the form on the home page. Code: `assets/ui.js` (reveals and quote), `assets/site.js` (hero 3D only), `assets/site.css`. Photos: `assets/photos/<name>-800.jpg` and `-1600.jpg`, mostly setups and gear, at card sizes.
 
-Licences: photos are from Unsplash (free for commercial use, no credit required). The headphones model is Sketchfab "Free Standard" (as stated by Sketchfab, no credit required). That is why there is no credits page. **Any new 3D model must also be CC0 or Free Standard**, or it needs a visible credit.
+Normal: the badge in the header shows the item count; "Send on WhatsApp" opens WhatsApp with the event details and the equipment list. Broken: the badge never changes (check the console and `ui.js`), or the message is empty (check the form field names: type, date, venue, guests, services, notes, name, phone).
 
-Normal: headline words rise in on load, photos open as they come into view. Broken: text that never appears (check the console; `.split`, `.rise` and `.shot` get the class `in` from `site.js`), or an empty hero (the model failed to load).
+**Owner to confirm:** that 0776 156 627 is on WhatsApp, and that the equipment list on `/hire/` matches what Mellow actually hires out.
 
 ## Other pages
 
@@ -57,7 +63,8 @@ Push to `main` and Cloudflare builds automatically (`npx wrangler deploy`, asset
 - Navy must be visible: it is the text and button colour.
 - The traced version of the owner's headset beat the geometric redraws. Keep its organic ear-cups.
 - No credits page and no designer callouts: use only assets that need no credit.
-- 3D only in the hero; photographs elsewhere, of African/Ugandan events at the quality of adlib.co.uk.
+- 3D only in the hero; photographs elsewhere at the quality of adlib.co.uk, mostly setups and gear (not people), at card sizes, feeling Ugandan.
+- The site is Mellow Empire with divisions and things to do (hire, quote), not a brochure.
 
 ## Open items
 
