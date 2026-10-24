@@ -29,6 +29,9 @@ shapes in every file, so no font needs installing).
 ## Rebuilding
 
 The files are generated, not drawn by hand. To change or add a version, edit `tools/logo/build_brand_kit.py`, then run
-from `tools/logo`: `python build_brand_kit.py` and `node render_brand_kit.mjs` (needs `npm install` there once). The
-website's own logo files live in `images/logo/mellow-sounds/` and are built by `build_logos.py`; this kit does not
-change them.
+from `tools/logo`: `python build_logos.py`, `node render_logos.mjs`, `python build_brand_kit.py` and
+`node render_brand_kit.mjs` (needs `npm install` there once). This folder is the only place for logo files.
+`images/logo/mellow-sounds/` holds just the five files the website loads (favicon.svg, mellow-sounds_favicon.ico,
+mellow-sounds_apple_touch_icon_180.png, nav_crimson_disk_ink_64h.png, social/mellow-sounds-card-1200x630.png).
+`build_logos.py` regenerates the full working set there, so after a rebuild delete everything in that folder except
+those five before committing.
