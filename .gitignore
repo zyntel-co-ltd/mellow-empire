@@ -7,3 +7,7 @@ repomix-output.*.xml
 
 # logo tooling
 tools/logo/node_modules/
+
+# local worker secrets
+.dev.vars
+.wrangler/

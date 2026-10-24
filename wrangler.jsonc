@@ -1,0 +1,11 @@
+{
+  // Cloudflare builds from this file on every push to main (npx wrangler deploy). The name is the existing Worker
+  // that serves mellowempire.com: do not rename it, or a new Worker is created without the domain.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nameless-tooth-67db",
+  "main": "worker.js",
+  "compatibility_date": "2026-06-30",
+  "observability": { "enabled": true },
+  "assets": { "directory": ".", "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  "compatibility_flags": ["nodejs_compat"]
+}

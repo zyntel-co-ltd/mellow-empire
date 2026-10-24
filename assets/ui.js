@@ -3,7 +3,7 @@
 (function () {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const WHATSAPP = '256776156627';
-  const EMAIL = 'enquiries@mellowempire.com';
+  const EMAIL = 'mellowsounds256@gmail.com';
 
   // ---- words: headings rise in word by word ---------------------------------------------------------
   for (const el of document.querySelectorAll('.split')) {
@@ -130,8 +130,28 @@
     form.querySelector('[data-send="whatsapp"]').addEventListener('click', () => {
       window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message())}`, '_blank', 'noopener');
     });
-    form.querySelector('[data-send="email"]').addEventListener('click', () => {
-      location.href = `mailto:${EMAIL}?subject=${encodeURIComponent('Quote request')}&body=${encodeURIComponent(message())}`;
+    // "Send by email": the site emails the quote to Mellow (worker.js, /api/quote via Resend). If that fails,
+    // fall back to the visitor's own email app so the request is never lost.
+    const status = form.querySelector('[data-status]');
+    const say = (text, bad) => { status.textContent = text; status.classList.toggle('bad', !!bad); status.hidden = !text; };
+    form.querySelector('[data-send="email"]').addEventListener('click', async (e) => {
+      const f = form.elements, btn = e.currentTarget;
+      if (!f.name.value.trim() || f.phone.value.replace(/\D/g, '').length < 7) { say('Add your name and phone number so we can reply.', true); (f.name.value.trim() ? f.phone : f.name).focus(); return; }
+      btn.disabled = true; say('Sending…');
+      const body = {
+        type: f.type.value, date: f.date.value, venue: f.venue.value, guests: f.guests.value, notes: f.notes.value,
+        name: f.name.value, phone: f.phone.value, website: f.website.value,
+        services: [...form.querySelectorAll('input[name="services"]:checked')].map((b) => b.value),
+        equipment: Object.keys(memo).map((name) => ({ name, qty: memo[name] })),
+      };
+      try {
+        const r = await fetch('/api/quote', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+        if (!r.ok) throw new Error(r.status);
+        say('Sent. We will call or WhatsApp you on ' + f.phone.value.trim() + ' with a price.');
+      } catch (err) {
+        say('Could not send from the site, so your email app is opening with the quote instead.', true);
+        location.href = `mailto:${EMAIL}?subject=${encodeURIComponent('Quote request')}&body=${encodeURIComponent(message())}`;
+      } finally { btn.disabled = false; }
     });
     form.addEventListener('submit', (e) => e.preventDefault());
   }

@@ -10,3 +10,5 @@ wrangler.jsonc
 tools
 node_modules
 .claude
+worker.js
+.dev.vars
