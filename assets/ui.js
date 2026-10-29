@@ -2,8 +2,6 @@
 // The quote lives in localStorage ("mellow-quote"), so items added on /hire/ show up in the form on the home page.
 (function () {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const WHATSAPP = '256776156627';
-  const EMAIL = 'sales@mellowempire.com';
 
   // ---- words: headings rise in word by word ---------------------------------------------------------
   function splitWords() {
@@ -115,33 +113,15 @@
   });
 
   // ---- send the quote ------------------------------------------------------------------------------
+  // Submit emails the quote to Mellow from the site (worker.js, /api/quote via Resend). It never opens the
+  // visitor's WhatsApp or email app.
   const form = document.querySelector('#quote-form');
   if (form) {
-    const message = () => {
-      const f = form.elements;
-      const services = [...form.querySelectorAll('input[name="services"]:checked')].map((b) => b.value);
-      const lines = ['Hello Mellow, I would like a quote.', ''];
-      if (f.type.value) lines.push(`Event: ${f.type.value}`);
-      if (f.date.value) lines.push(`Date: ${f.date.value}`);
-      if (f.venue.value) lines.push(`Venue: ${f.venue.value}`);
-      if (f.guests.value) lines.push(`Guests: about ${f.guests.value}`);
-      if (services.length) lines.push(`Services: ${services.join(', ')}`);
-      const names = Object.keys(memo);
-      if (names.length) { lines.push('', 'Equipment:'); names.forEach((n) => lines.push(`- ${memo[n]} x ${n}`)); }
-      if (f.notes.value.trim()) lines.push('', f.notes.value.trim());
-      if (f.name.value) lines.push('', `Name: ${f.name.value}`);
-      if (f.phone.value) lines.push(`Phone: ${f.phone.value}`);
-      return lines.join('\n');
-    };
-    form.querySelector('[data-send="whatsapp"]').addEventListener('click', () => {
-      window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message())}`, '_blank', 'noopener');
-    });
-    // "Send by email": the site emails the quote to Mellow (worker.js, /api/quote via Resend). If that fails,
-    // fall back to the visitor's own email app so the request is never lost.
     const status = form.querySelector('[data-status]');
     const say = (text, bad) => { status.textContent = text; status.classList.toggle('bad', !!bad); status.hidden = !text; };
-    form.querySelector('[data-send="email"]').addEventListener('click', async (e) => {
-      const f = form.elements, btn = e.currentTarget;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const f = form.elements, btn = form.querySelector('[type="submit"]');
       if (!f.name.value.trim() || f.phone.value.replace(/\D/g, '').length < 7) { say('Add your name and phone number so we can reply.', true); (f.name.value.trim() ? f.phone : f.name).focus(); return; }
       btn.disabled = true; say('Sending…');
       const body = {
@@ -155,11 +135,9 @@
         if (!r.ok) throw new Error(r.status);
         say('Sent. We will call or WhatsApp you on ' + f.phone.value.trim() + ' with a price.');
       } catch (err) {
-        say('Could not send from the site, so your email app is opening with the quote instead.', true);
-        location.href = `mailto:${EMAIL}?subject=${encodeURIComponent('Quote request')}&body=${encodeURIComponent(message())}`;
+        say('Could not send your quote. Please try again, or call 0776 156 627.', true);
       } finally { btn.disabled = false; }
     });
-    form.addEventListener('submit', (e) => e.preventDefault());
   }
 
   // ---- footer credits: close with the button, Escape, or a click anywhere else ---------------------------
