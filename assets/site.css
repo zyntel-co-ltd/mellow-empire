@@ -67,6 +67,12 @@ p{line-height:1.6;color:var(--muted);margin:0 0 1rem;font-size:1rem}
 .sector{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px}
 .sector .shot{border-radius:12px}
 
+/* our work: stills from Mellow's own event videos */
+.work{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.work figure{margin:0}
+.work .shot{aspect-ratio:4/5;margin-bottom:10px}
+.work figcaption{font-size:.85rem;font-weight:600}
+
 /* steps */
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .steps li{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
@@ -136,6 +142,7 @@ footer{padding:26px clamp(16px,6vw,96px) 90px;font-size:.82rem;color:var(--muted
   h1{font-size:clamp(2.3rem,10.5vw,3.3rem)}
   .paths,.divisions,.steps{grid-template-columns:1fr}
   .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .work{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .sector{grid-template-columns:1fr}
   .grid2{grid-template-columns:1fr}
   .cat{grid-template-columns:1fr}.cat.flip .shot{order:0}
