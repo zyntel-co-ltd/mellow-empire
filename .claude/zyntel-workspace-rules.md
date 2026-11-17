@@ -15,7 +15,7 @@ folder. If you only cloned this repository, clone the knowledge repo next to it 
 
 All work is tracked in **Plane** (workspace `zyntel`). Projects: `ENG` (engineering across products), `OPS`
 (operations), `FORMS` (ZyntForms), `KANTA` (KantaHub), `5S` (Five S property management), `FATUR` (Faturamento),
-`GRCR` (GreatCare), `NATAL` (Natalis), `MAZRA` (Mazra), `NHLFB` (Nakasero feedback), `ZSITE` (zyntel.net website).
+`GRCR` (GreatCare), `NATAL` (Natalis), `MAZRA` (Mazra), `NHLFB` (Nakasero feedback), `ZSITE` (zyntel.net website), `TOMK` (TOMK fashion store).
 Plane's word for a ticket is **work item**. Working agreement: playbook `07-tools/plane.md`.
 
 1. **No work without a Plane work item.** Before changing code, schema, docs, infrastructure or configuration, find
@@ -47,6 +47,21 @@ To *use* a secret (connect to a database, call an API), read it and pass it to t
 When a command would print a secret (`cat .env`, `printenv`), pipe it through a redaction step such as
 `sed 's/=.*/=<redacted>/'`.
 
+**Checking whether a variable is set is not a reason to print it.** This is the usual way a secret leaks: a loop or
+one-liner that reports "set" and also echoes the value (`echo "$NAME $VALUE"`, `cut -d= -f2`, `tr -d` on the value
+all still print it). Rules:
+
+- Report only `set` or `empty`, never the value or any part of it (no first or last characters either). Safe pattern:
+  `grep -q "^NAME=." file && echo "NAME set" || echo "NAME empty"`.
+- To copy a credential from one file to another, use a command whose output is discarded
+  (`grep "^NAME=" src >> dest`), then confirm with names only. Never `cat` or `Read` a file full of credentials just to
+  copy a few; read only the variable names (`grep -oE "^[A-Z0-9_]+=" file`).
+- Before running a command that touches a credential file, read the command once and check that nothing in it can print a
+  value. A redaction step added afterwards is too late.
+- **If one is printed anyway, say so plainly in your next message**: which credential, which repository, whether it is
+  sandbox or production, and that it should be rotated (production: at once). Do not hide it or play it down, and note it
+  in the product's PROJECT_STATUS. It stays in that session's history.
+
 ## 3. Record what you learn and the tools you use
 
 Each session leaves the next one better off. Record what is worth keeping in the same session, before finishing:
@@ -74,3 +89,8 @@ Each session leaves the next one better off. Record what is worth keeping in the
 - **Stay on the product you were asked about.** A problem you notice in another product gets one line in your report
   (and a work item in its project), not a chain of unrequested work.
 - **Ask before anything billed** (paid services, upgrades, purchases) or anything hard to undo in production.
+- **Clean up before you finish.** Remove what your session created: browser screenshots (`.playwright-mcp`), the
+  scratchpad, scratch folders and logs, merged worktrees (`git worktree remove`), scratch scripts on servers
+  (Nakasero VM: `C:\ProgramData\zyntel-phase0`), and stop dev servers you started. Never remove anything with
+  uncommitted or unmerged work, anything a service uses, client documents or backups; list those for the owner.
+  Checklist: playbook `07-tools/session-cleanup.md`.
